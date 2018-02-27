@@ -3,6 +3,13 @@ class PhoneList {
       this._phoneList = element;
       this._phoneElements = options;
       this._render();
+
+      this._phoneList.querySelector('.phones').onclick = (event) => {
+        if (event.target.closest('li')) {
+          alert(event.target.closest('li').getAttribute("id"));
+          event.preventDefault();
+        }
+      };
     }
 
     _render() {
