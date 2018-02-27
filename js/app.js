@@ -39,9 +39,10 @@ class Search {
     constructor({input, list}) {
         this._searchField = input;
         this._phoneList = list;
+        this._searchPhone = this._debounce(this._filter, 300);
 
         this._searchField.onkeyup = (event) => {
-            this._filter(this._searchField.value);
+            this._searchPhone(this._searchField.value);
         }
     }
 
@@ -53,6 +54,18 @@ class Search {
                 document.querySelector(`#${phoneElement.id}`).classList.remove('hide');
             }
         });
+    }
+
+    _debounce(f, delay) {
+        let timer;
+
+        return function(...args) {
+            clearTimeout(timer);
+
+            timer = setTimeout(() => {
+               f.call(this, ...args);
+            }, delay);
+        }
     }
 }
 
