@@ -35,6 +35,27 @@ class PhoneList {
     }
 }
 
+class Search {
+    constructor({input, list}) {
+        this._searchField = input;
+        this._phoneList = list;
+
+        this._searchField.onkeyup = (event) => {
+            this._filter(this._searchField.value);
+        }
+    }
+
+    _filter(value) {
+        this._phoneList.forEach((phoneElement) => {
+            if (phoneElement.name.toLowerCase().indexOf(value) === -1) {
+                document.querySelector(`#${phoneElement.id}`).classList.add('hide');
+            } else {
+                document.querySelector(`#${phoneElement.id}`).classList.remove('hide');
+            }
+        });
+    }
+}
+
 let phonesArr = [
     {
         "age": 0,
@@ -194,4 +215,9 @@ let phonesArr = [
 let phoneList = new PhoneList({
     element: document.querySelector('.phones-list'),
     options: phonesArr
+});
+
+let searchField = new Search({
+    input: document.querySelector('#search'),
+    list: phonesArr
 });
