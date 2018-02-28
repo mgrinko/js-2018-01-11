@@ -158,20 +158,17 @@ let phones = [
 
 let phonesList = document.querySelector('.phones-list');
 
-phonesList.addEventListener('click', function (evt) {
-    let target = evt.target;
-    if (target.className !== 'thumbnail ng-scope') return;
-    alert(target.dataset.id);
-
-});
-
 let phonesUL = document.createElement('ul');
 phonesUL.className = 'phones';
 phonesList.appendChild(phonesUL);
 
+phonesList.addEventListener('click', function (evt) {
+    let target = evt.target;
+    if (target.className !== 'thumbnail ng-scope') return;
+    alert(target.dataset.id);
+});
+
 for (let i = 0; i < phones.length; i++) {
-
-
     let phoneLI = document.createElement('li');
     phoneLI.className = 'thumbnail ng-scope';
     phoneLI.dataset.id = phones[i].id;
