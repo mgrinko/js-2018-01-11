@@ -1,15 +1,33 @@
 class PhoneList {
-    constructor({element, options}) {
-      this._phoneList = element;
-      this._phoneElements = options;
-      this._render();
+    constructor({list, data, searchField, sortField}) {
+        this._phoneList = list;
+        this._phoneElements = data;
+        this._searchField = searchField;
+        this._sortField = sortField;
+        this._searchPhone = this._debounce(this._filter, 300);
 
-      this._phoneList.querySelector('.phones').onclick = (event) => {
-        if (event.target.closest('li')) {
-          alert(event.target.closest('li').getAttribute("id"));
-          event.preventDefault();
+        this._render();
+
+        this._phoneList.querySelector('.phones').onclick = (event) => {
+            if (event.target.closest('li')) {
+                alert(event.target.closest('li').getAttribute("id"));
+                event.preventDefault();
+            }
+        };
+
+        this._searchField.onkeyup = () => {
+            this._searchPhone(this._searchField.value);
         }
-      };
+
+        this._sortField.onchange = (event) => {
+            if (event.target.value == 'age') {
+                this._sortAge();
+            }
+            if (event.target.value == 'name') {
+                this._sortName();
+            }
+            this._render();
+        }
     }
 
     _render() {
@@ -33,21 +51,21 @@ class PhoneList {
             </ul>  
         `;
     }
-}
 
-class Search {
-    constructor({input, list}) {
-        this._searchField = input;
-        this._phoneList = list;
-        this._searchPhone = this._debounce(this._filter, 300);
+    _sortAge() {
+        this._phoneElements.sort(function(a, b) {
+            return a.age - b.age;
+        });
+    }
 
-        this._searchField.onkeyup = (event) => {
-            this._searchPhone(this._searchField.value);
-        }
+    _sortName() {
+        this._phoneElements.sort(function(a, b) {
+            return a.name.localeCompare(b.name);
+        });
     }
 
     _filter(value) {
-        this._phoneList.forEach((phoneElement) => {
+        this._phoneElements.forEach((phoneElement) => {
             if (phoneElement.name.toLowerCase().indexOf(value) === -1) {
                 document.querySelector(`#${phoneElement.id}`).classList.add('hide');
             } else {
@@ -63,7 +81,7 @@ class Search {
             clearTimeout(timer);
 
             timer = setTimeout(() => {
-               f.call(this, ...args);
+                f.call(this, ...args);
             }, delay);
         }
     }
@@ -226,11 +244,8 @@ let phonesArr = [
 ];
 
 let phoneList = new PhoneList({
-    element: document.querySelector('.phones-list'),
-    options: phonesArr
-});
-
-let searchField = new Search({
-    input: document.querySelector('#search'),
-    list: phonesArr
+    list: document.querySelector('.phones-list'),
+    data: phonesArr,
+    searchField: document.querySelector('#search'),
+    sortField: document.querySelector('#sort')
 });
