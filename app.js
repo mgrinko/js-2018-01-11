@@ -1,4 +1,6 @@
-[
+'use strict';
+
+let phones = [
     {
         "age": 0,
         "id": "motorola-xoom-with-wi-fi",
@@ -152,4 +154,38 @@
         "name": "Motorola CHARM\u2122 with MOTOBLUR\u2122",
         "snippet": "Motorola CHARM fits easily in your pocket or palm.  Includes MOTOBLUR service."
     }
-]
+];
+
+let phonesList = document.querySelector('.phones-list');
+
+for (let i = 0; i < phones.length; i++) {
+    let phonesUL = document.createElement('ul');
+    phonesUL.className = 'phones';
+    phonesList.appendChild(phonesUL);
+
+    let phoneLI = document.createElement('li');
+    phoneLI.className = 'thumbnail ng-scope';
+    phonesUL.appendChild(phoneLI);
+
+    let phoneLink = document.createElement('a');
+    phoneLink.className = 'thumb';
+    phoneLink.setAttribute('href', phones[i].imageUrl);
+    phoneLI.appendChild(phoneLink);
+
+    let phoneImg = document.createElement('img');
+    phoneImg.setAttribute('ng-src', phones[i].imageUrl);
+    phoneImg.setAttribute('alt', phones[i].name);
+    phoneImg.setAttribute('src', phones[i].imageUrl);
+    phoneLink.appendChild(phoneImg);
+
+    let phoneName = document.createElement('a');
+    phoneName.className = 'ng-binding';
+    phoneName.setAttribute('href', phones[i].imageUrl);
+    phoneName.textContent = phones[i].name;
+    phoneLI.appendChild(phoneName);
+
+    let phoneDesc = document.createElement('p');
+    phoneDesc.className = 'ng-binding';
+    phoneDesc.textContent = phones[i].snippet;
+    phoneLI.appendChild(phoneDesc);
+}
