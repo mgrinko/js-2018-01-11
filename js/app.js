@@ -1,8 +1,13 @@
 ﻿"use strict"
 
-import {phones} from './phones';
-import {PhonesListItem} from './PhonesListItem';
+let phonesList = new PhonesList(document.body.querySelector(`.col-md-10`), phones);
 
-for (let value of phones) {
-	new PhonesListItem(document.body.querySelector(`ul[class="phones"]`), value);
-}
+document.body.querySelector(`.sort`).addEventListener(`change`, () => {
+	phonesList.sort(event.target.value);
+});
+
+document.body.querySelector(`.filtr`).addEventListener(`change`, () => {
+	phonesList.filtr(event.target.value);
+});
+
+//классы компонентов боковой панели к сожалению не сделал - глаза слипаются(
