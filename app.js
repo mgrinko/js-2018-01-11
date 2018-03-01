@@ -157,11 +157,6 @@ let phones = [
 ];
 
 let phonesList = document.querySelector('.phones-list');
-
-let phonesUL = document.createElement('ul');
-phonesUL.className = 'phones';
-phonesList.appendChild(phonesUL);
-
 let inputSearch = document.querySelector('.input-search');
 
 inputSearch.addEventListener('keyup', function () {
@@ -182,31 +177,41 @@ phonesList.addEventListener('click', function (evt) {
   alert(target.dataset.id);
 });
 
-for (let i = 0; i < phones.length; i++) {
-  let phoneLI = document.createElement('li');
-  phoneLI.className = 'thumbnail ng-scope';
-  phoneLI.dataset.id = phones[i].id;
-  phonesUL.appendChild(phoneLI);
+createPhones();
 
-  let phoneLink = document.createElement('a');
-  phoneLink.className = 'thumb';
-  phoneLink.setAttribute('href', phones[i].imageUrl);
-  phoneLI.appendChild(phoneLink);
+function createPhones() {
+  let phonesUL = document.createElement('ul');
+  phonesUL.className = 'phones';
+  phonesList.appendChild(phonesUL);
 
-  let phoneImg = document.createElement('img');
-  phoneImg.setAttribute('ng-src', phones[i].imageUrl);
-  phoneImg.setAttribute('alt', phones[i].name);
-  phoneImg.setAttribute('src', phones[i].imageUrl);
-  phoneLink.appendChild(phoneImg);
+  for (let i = 0; i < phones.length; i++) {
+    let phoneLI = document.createElement('li');
+    phoneLI.className = 'thumbnail ng-scope';
+    phoneLI.dataset.id = phones[i].id;
+    phonesUL.appendChild(phoneLI);
 
-  let phoneName = document.createElement('a');
-  phoneName.className = 'ng-binding';
-  phoneName.setAttribute('href', phones[i].imageUrl);
-  phoneName.textContent = phones[i].name;
-  phoneLI.appendChild(phoneName);
+    let phoneLink = document.createElement('a');
+    phoneLink.className = 'thumb';
+    phoneLink.setAttribute('href', phones[i].imageUrl);
+    phoneLI.appendChild(phoneLink);
 
-  let phoneDesc = document.createElement('p');
-  phoneDesc.className = 'ng-binding';
-  phoneDesc.textContent = phones[i].snippet;
-  phoneLI.appendChild(phoneDesc);
+    let phoneImg = document.createElement('img');
+    phoneImg.setAttribute('ng-src', phones[i].imageUrl);
+    phoneImg.setAttribute('alt', phones[i].name);
+    phoneImg.setAttribute('src', phones[i].imageUrl);
+    phoneLink.appendChild(phoneImg);
+
+    let phoneName = document.createElement('a');
+    phoneName.className = 'ng-binding';
+    phoneName.setAttribute('href', phones[i].imageUrl);
+    phoneName.textContent = phones[i].name;
+    phoneLI.appendChild(phoneName);
+
+    let phoneDesc = document.createElement('p');
+    phoneDesc.className = 'ng-binding';
+    phoneDesc.textContent = phones[i].snippet;
+    phoneLI.appendChild(phoneDesc);
+  }
 }
+
+
