@@ -1,4 +1,4 @@
-[
+let phones = [
     {
         "age": 0,
         "id": "motorola-xoom-with-wi-fi",
@@ -152,4 +152,4 @@
         "name": "Motorola CHARM\u2122 with MOTOBLUR\u2122",
         "snippet": "Motorola CHARM fits easily in your pocket or palm.  Includes MOTOBLUR service."
     }
-]
+];
