@@ -9,6 +9,12 @@ export default class ShoppingCart {
     this._render();
   }
 
+  addItem(item) {
+    this._items.push(item);
+
+    this._render();
+  }
+
   _render() {
     let itemsHtml = this._items
       .map((item) => `<li>${ item }</li>`)

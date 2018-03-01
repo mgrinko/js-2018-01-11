@@ -21,7 +21,9 @@ export default class PhonesPage {
     });
 
     this._phonesCatalogue.on('phoneSelected', (event) => {
-      alert(event.detail);
+      const phoneId = event.detail;
+
+      this._shoppingCart.addItem(phoneId);
     });
 
 
