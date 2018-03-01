@@ -18,7 +18,7 @@ export default class PhonesPage {
       phones: PhonesService.getPhones(),
     });
 
-    this._phonesCatalogue._element.addEventListener('phoneSelected', (event) => {
+    this._phonesCatalogue.on('phoneSelected', (event) => {
       alert(event.detail);
     });
 

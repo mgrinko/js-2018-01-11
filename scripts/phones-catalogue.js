@@ -7,7 +7,11 @@ export default class PhonesCatalogue {
 
     this._render();
 
-    this._element.onclick = this._onPhoneItemClicked.bind(this);
+    this.on('click', this._onPhoneItemClicked.bind(this));
+  }
+
+  on(eventName, callback) {
+    this._element.addEventListener(eventName, callback);
   }
 
   _render() {
