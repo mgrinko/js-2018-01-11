@@ -185,32 +185,16 @@ function createPhones() {
   phonesList.appendChild(phonesUL);
 
   for (let i = 0; i < phones.length; i++) {
-    let phoneLI = document.createElement('li');
-    phoneLI.className = 'thumbnail ng-scope';
-    phoneLI.dataset.id = phones[i].id;
-    phonesUL.appendChild(phoneLI);
-
-    let phoneLink = document.createElement('a');
-    phoneLink.className = 'thumb';
-    phoneLink.setAttribute('href', phones[i].imageUrl);
-    phoneLI.appendChild(phoneLink);
-
-    let phoneImg = document.createElement('img');
-    phoneImg.setAttribute('ng-src', phones[i].imageUrl);
-    phoneImg.setAttribute('alt', phones[i].name);
-    phoneImg.setAttribute('src', phones[i].imageUrl);
-    phoneLink.appendChild(phoneImg);
-
-    let phoneName = document.createElement('a');
-    phoneName.className = 'ng-binding';
-    phoneName.setAttribute('href', phones[i].imageUrl);
-    phoneName.textContent = phones[i].name;
-    phoneLI.appendChild(phoneName);
-
-    let phoneDesc = document.createElement('p');
-    phoneDesc.className = 'ng-binding';
-    phoneDesc.textContent = phones[i].snippet;
-    phoneLI.appendChild(phoneDesc);
+    let phonesItem = document.createElement('li');
+    phonesItem.className = "thumbnail ng-scope";
+    phonesItem.dataset.id = phones[i].id;
+    phonesItem.innerHTML = `
+        <a class="thumb" href="${phones[i].imageUrl}">
+          <img ng-src="${phones[i].imageUrl}" alt="${phones[i].name}" src="${phones[i].imageUrl}">
+        </a>
+        <a class="ng-binding" href="${phones[i].imageUrl}">${phones[i].name}</a>
+        <p class="ng-binding">${phones[i].snippet}</p>`;
+    phonesUL.appendChild(phonesItem);
   }
 }
 
