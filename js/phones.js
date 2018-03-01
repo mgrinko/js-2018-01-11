@@ -1,6 +1,6 @@
 ﻿"use strict"
 
-const phones = [
+export default const phones = [
 
 {
     "additionalFeatures": "Sensors: proximity, ambient light, barometer, gyroscope", 

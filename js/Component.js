@@ -1,6 +1,6 @@
 ﻿"use strict"
 
-class Component {
+export default class Component {
 	constructor(conteiner) {
 		this._conteiner = conteiner;
 	}

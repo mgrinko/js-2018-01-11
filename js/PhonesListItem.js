@@ -1,6 +1,8 @@
 ﻿"use strict"
 
-class PhonesListItem extends Component {
+import Component from './Component';
+
+export default class PhonesListItem extends Component {
 	constructor(conteiner, options) {
 		super();
 		

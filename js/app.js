@@ -1,5 +1,8 @@
 ﻿"use strict"
 
+import phones from './phones';
+import PhonesList from './PhonesList';
+
 let phonesList = new PhonesList(document.body.querySelector(`.col-md-10`), phones);
 
 document.body.querySelector(`.sort`).addEventListener(`change`, () => {
