@@ -2,6 +2,7 @@
 
 import PhonesCatalogue from './phones-catalogue.js';
 import PhonesService from './phones-service.js';
+import ShoppingCart from './shopping-cart.js';
 
 export default class PhonesPage {
   constructor({ element }) {
@@ -9,9 +10,10 @@ export default class PhonesPage {
 
     this._render();
 
-    // this._shoppingCart = new ShoppingCart({
-    //   element: document.querySelector('[data-component="shopping-cart"]'),
-    // });
+    this._shoppingCart = new ShoppingCart({
+      element: document.querySelector('[data-component="shopping-cart"]'),
+      items: [1, 2, 3],
+    });
 
     this._phonesCatalogue = new PhonesCatalogue({
       element: document.querySelector('[data-component="phones-catalogue"]'),

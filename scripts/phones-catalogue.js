@@ -14,6 +14,18 @@ export default class PhonesCatalogue {
     this._element.addEventListener(eventName, callback);
   }
 
+  of(eventName, callback) {
+    this._element.removeEventListener(eventName, callback);
+  }
+
+  _trigger(eventName, data) {
+    let customEvent = new CustomEvent(eventName, {
+      detail: data,
+    });
+
+    this._element.dispatchEvent(customEvent);
+  }
+
   _render() {
     let itemsHtml = '';
 
@@ -45,10 +57,6 @@ export default class PhonesCatalogue {
       return;
     }
 
-    let customEvent = new CustomEvent('phoneSelected', {
-      detail: phoneElement.dataset.phoneId,
-    });
-
-    this._element.dispatchEvent(customEvent);
+    this._trigger('phoneSelected', phoneElement.dataset.phoneId);
   }
 }
