@@ -155,25 +155,37 @@ const phones = [{
 
 
 class PhonesList {
-    contructor() {}
+    contructor({phonesData}) {
 
-    populatePhonesData() {
-        for (let phoneEntry of phones) {
-            const phonesContainer = document.querySelector('.phones');
-            phonesContainer.innerHTML += `
-							<li class="thumbnail">
-								<a class="thumb">
-								  <img src=${phoneEntry.imageUrl}>
-								</a>
-								<a>${phoneEntry.name}</a>
-								<p>${phoneEntry.snippet}</p>
-							</li>`;
-        }
+    this.phonesData = phonesData;
+    console.log(phonesData);
+
+
     }
+
+
+
+    
+    populatePhonesData(phonesData) {
+    	   
+    	console.log(this.phonesData);
+    //     for (let phoneEntry of phonesData) {
+    //         const phonesContainer = document.querySelector('.phones');
+    //         phonesContainer.innerHTML += `
+				// 			<li class="thumbnail">
+				// 				<a class="thumb">
+				// 				  <img src=${phoneEntry.imageUrl}>
+				// 				</a>
+				// 				<a>${phoneEntry.name}</a>
+				// 				<p>${phoneEntry.snippet}</p>
+				// 			</li>`;
+    //     }
+     }
 }
 
 
 
 
-const phonesList = new PhonesList();
+let phonesList = new PhonesList({phonesData: phones});
 phonesList.populatePhonesData();
+//console.log(phones);
