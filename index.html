@@ -5,7 +5,8 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="app.css">
-    <script type="text/javascript" src="phones/phones.js"></script>
+    <script type="text/javascript" src="phones/phones.js" defer></script>
+    <script src="app.js" defer></script>
   </head>
   <body>
 
@@ -24,7 +25,7 @@
 
                 <p>
                   Sort by:
-                  <select>
+                  <select class="phone__list--sort">
                     <option value="name">Alphabetical</option>
                     <option value="age">Newest</option>
                   </select>
@@ -47,106 +48,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      'use strict';
-
-      class PhoneCatalogue {
-        constructor({catalogueElement, phoneData, searchFields}) {
-          this._element = catalogueElement;
-          this._data = phoneData;
-          this._searchFields = searchFields;
-
-          this._searchEl = document.querySelector('.phone__list--search');
-
-          // default render
-          this._render(this._data);
-
-          // user type text in input search
-          this._searchEl.onkeyup = (event) => {
-            this._inputText = event.target.value;
-
-            if(this._inputText.length > 3) {
-              this._search();
-            }
-
-            if(this._inputText === '') {
-              this._render(this._data);
-            }
-
-          }
-        }
-
-        // render phoneList method
-        _render(data) {
-          //create ul
-          let list = document.createElement('ul');
-          list.classList.add('phones');
-
-          // add li in ul
-          data.forEach((item) => {
-            list.innerHTML += '' +
-              '<li class="thumbnail">' +
-              '<a href="" class="thumb">' +
-              '<img alt="' + item.name + '" src="' + item.imageUrl + '">' +
-              '</a>' +
-              '<a href="">' + item.name + '</a>' +
-              '<p>' + item.snippet + '</p>' +
-              '</li>';
-          });
-
-          // clear element
-          this._element.innerHTML = '';
-
-          // add ul in element
-          this._element.appendChild(list);
-        };
-
-        // search phone method
-        _search() {
-          let searchResult = [];
-          let inputTextUpper = this._inputText.toUpperCase();
-
-          this._data.forEach((phone) => {
-
-            for(let key in phone) {
-
-              this._searchFields.forEach((field) => {
-
-                if(key === field) {
-
-                  if(phone[key].toUpperCase().indexOf(inputTextUpper) !== -1) {
-
-                    if(searchResult.indexOf(phone) === -1) {
-                      searchResult.push(phone);
-                    }
-
-                  }
-                }
-
-              });
-
-            }
-          });
-
-          // if not search result
-          if(searchResult.length === 0) {
-            this._element.innerHTML = '<span>По вашему запросу ничего не нашлось!</span>';
-          } else {
-            // if have result render
-            this._render(searchResult);
-          }
-
-        };
-      }
-
-      // show catalogue
-      let catalogue = new PhoneCatalogue({
-        catalogueElement: document.querySelector('.phone-list'),
-        phoneData: phones,
-        searchFields: ['name', 'snippet'],
-      });
-
-    </script>
   </body>
 </html>
