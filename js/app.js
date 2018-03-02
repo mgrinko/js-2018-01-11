@@ -197,5 +197,3 @@ function createPhones() {
     phonesUL.appendChild(phonesItem);
   }
 }
-
-
