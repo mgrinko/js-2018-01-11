@@ -1,38 +1,29 @@
 ﻿"use strict"
 
-import Component from './Component';
-
-export default class PhonesListItem extends Component {
-	constructor(conteiner, options) {
+class PhonesListItem extends Component {
+	constructor({ conteiner, features, }) {
 		super();
 		
 		this._conteiner = conteiner;
-		this._options = options;
+		this._features = features;
 		
 		this._component = document.createElement(`li`);
-		this._component._options = options;
+		this._component._features = features;
 		
 		this._render();
-		
-		this._component.addEventListener(`click`, () => {
-			alert(this._options['id']);
-		});
 	}
 	
 	_render() {
 		this._component.className = `thumbnail`;
 		
 		this._component.innerHTML = `
-		<a href="#!/phones/${ this._options['id'] }" class="thumb">
-			<img alt="${ this._options['id'] }" src="${ this._options['images'][0] }">
+		<a href="#!/phones/${ this._features['id'] }" class="thumb">
+			<img alt="${ this._features['id'] }" src="${ this._features['imageUrl'] }">
 		</a>
-		<a href="#!/phones/${ this._options['id'] }">${ this._options['name'] }</a>
-		<p>${ this._options['description'] }</p>
-		`; //описание не то, что в примере на странице, но переписывать это желания нет
+		<a href="#!/phones/${ this._features['id'] }">${ this._features['name'] }</a>
+		<p>${ this._features['snippet'] }</p>
+		`;
 		
 		this._conteiner.append(this._component);
 	};
 }
-
-
-

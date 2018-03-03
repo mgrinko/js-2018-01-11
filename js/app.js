@@ -1,16 +1,17 @@
 ﻿"use strict"
 
-import phones from './phones';
-import PhonesList from './PhonesList';
+let phonesFilterControl = new PhonesFilterControl(document.body.querySelector(`.controls`));
 
-let phonesList = new PhonesList(document.body.querySelector(`.col-md-10`), phones);
+let phonesSortControl = new PhonesSortControl(document.body.querySelector(`.controls`));
 
-document.body.querySelector(`.sort`).addEventListener(`change`, () => {
-	phonesList.sort(event.target.value);
-});
+let phonesList = new PhonesList({
+								conteiner: document.body.querySelector(`.col-md-10`),
+								phones: phones,
+								filterControl: phonesFilterControl,
+								sortControl: phonesSortControl,
+							});
 
-document.body.querySelector(`.filtr`).addEventListener(`change`, () => {
-	phonesList.filtr(event.target.value);
-});
-
-//классы компонентов боковой панели к сожалению не сделал - глаза слипаются(
+let shoppingCart = new ShoppingCart({
+								conteiner: document.body.querySelector(`.shopping-cart`),
+								goodsList: phonesList,
+							});

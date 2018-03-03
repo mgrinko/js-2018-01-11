@@ -98,6 +98,23 @@ h1 {
   border-bottom: 1px solid gray;
 }
 
-.hidden {
+.js-hidden {
 	display: none;
+}
+
+.remove-good {
+	cursor: pointer;
+	color: red;
+}
+
+pre {
+	display: inline;
+	border: none;
+	background-color: white;
+	z-index: -1;
+	height: 1px;
+}
+
+.goods-amount {
+	color: blue;
 }

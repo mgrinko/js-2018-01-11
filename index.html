@@ -3,69 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Andrey Sakharov educational project</title>
+  <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="css/app.css">
-  <script defer type="module" src="js/app.js"></script>
+  <script defer src="js/phones.js"></script>
+  <script defer src="js/Component.js"></script>
+  <script defer src="js/PhonesFilterControl.js"></script>
+  <script defer src="js/PhonesSortControl.js"></script>
+  <script defer src="js/PhonesListItem.js"></script>
+  <script defer src="js/PhonesList.js"></script>
+  <script defer src="js/AddedGoodsItem.js"></script>
+  <script defer src="js/ShoppingCart.js"></script>
+  <script defer src="js/app.js"></script>
 </head>
 <body>
 
-<div>
-  <div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-2">
-          <!--Sidebar content-->
+        <aside class="col-md-2">
+		  <!--Sidebar content-->
+          <section class="controls"></section>
 
-          <section>
-            <p>
-              Search:
-              <input>
-            </p>
-
-            <p>
-              Sort by:
-              <select class="sort">
-                <option value="name">name</option>
-                <option value="id">id</option>
-              </select>
-            </p>
-				
-				<p>
-              Filtr by:
-              <select class="filtr">
-                <option value="none">none</option>
-                <option value="Android 3.0">Android 3.0</option>
-					 <option value="Android 2.3">Android 2.3</option>
-              </select>
-            </p>
-          </section>
-
-          <section>
-            <p>Shopping Cart</p>
-            <ul>
-              <li>Phone 1</li>
-              <li>Phone 2</li>
-              <li>Phone 3</li>
-            </ul>
-          </section>
-
-
-        </div>
-        <div class="col-md-10">
+          <section class="shopping-cart"></section>
+        </aside>
+		  
+        <main class="col-md-10">
           <!--Body content-->
 			 
-			 <ul class="phones"></ul>
+			 <!-- <div class="phones-list"></div>
 
- <!--         <div class="phones-list"></div>
-
-          <div class="phone-details"></div>
--->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+          <div class="phone-details"></div> -->
+        </main>
 
 </body>
 </html>
