@@ -1,40 +1,59 @@
-'use strict';
+import Component from './component.js';
 
-export default class PhonesCatalogue {
-  constructor({ element, phones,  }) {
-    this._element = element;
+export default class PhonesCatalogue extends Component {
+  constructor({element, phones}) {
+    super(element);
     this._phones = phones;
+    this._sortTemplate = '';
+    this._filterTemplate = '';
 
     this._render();
 
     this.on('click', this._onPhoneItemClicked.bind(this));
   }
 
-  on(eventName, callback) {
-    this._element.addEventListener(eventName, callback);
+  filterByName(filterStr) {
+    this._filterTemplate = filterStr.toLowerCase();
+    this._render();
   }
 
-  of(eventName, callback) {
-    this._element.removeEventListener(eventName, callback);
+  sort(sortField) {
+    if (sortField !== this._sortTemplate) {
+      this._sortTemplate = sortField;
+      this._sort();
+      this._render();
+    }
   }
 
-  _trigger(eventName, data) {
-    let customEvent = new CustomEvent(eventName, {
-      detail: data,
-    });
+  _sort() {
+    let sortTypes = {
+      name(a, b) {
+        return a.name > b.name ? 1 : -1;
+      },
+      age(a, b) {
+        return a.age - b.age;
+      }
+    };
 
-    this._element.dispatchEvent(customEvent);
+    if (this._sortTemplate in sortTypes) {
+      this._phones.sort(sortTypes[this._sortTemplate]);
+    }
+  }
+
+  _filterByName() {
+    return this._phones.filter(phone => phone.name.toLowerCase().includes(this._filterTemplate));
   }
 
   _render() {
     let itemsHtml = '';
+    let phones = this._filterTemplate ? this._filterByName() : this._phones;
 
-    for (let phone of this._phones) {
+    for (let phone of phones) {
       itemsHtml += `
         <li class="thumbnail"
             data-element="phone-item"
             data-phone-id="${ phone.id }">
-            
+
           <a href="#!/phones/${ phone.id }" class="thumb">
             <img alt="${ phone.name }" src="${ phone.imageUrl }">
           </a>
