@@ -2,6 +2,7 @@
 
 import PhonesCatalogue from './phones-catalogue.js';
 import PhonesService from './phones-service.js';
+import PhonesFilter from './phones-filter.js';
 import ShoppingCart from './shopping-cart.js';
 
 export default class PhonesPage {
@@ -15,6 +16,10 @@ export default class PhonesPage {
       items: [1, 2, 3],
     });
 
+    this._phonesFilter = new PhonesFilter({
+      element: document.querySelector('[data-component="phones-filter"]')
+    });
+
     this._phonesCatalogue = new PhonesCatalogue({
       element: document.querySelector('[data-component="phones-catalogue"]'),
       phones: PhonesService.getPhones(),
@@ -26,10 +31,18 @@ export default class PhonesPage {
       this._shoppingCart.addItem(phoneId);
     });
 
+    this._phonesFilter.on('phoneFiltered', (event) => {
+      const searchedValue = event.detail;
+
+      this._phonesCatalogue.searchPhone = this._phonesCatalogue.debounce(this._phonesCatalogue.filteredCatalog, 300);
+      this._phonesCatalogue.searchPhone(searchedValue);
+    });
+
 
   }
 
   _render() {
     // ... render page template
   }
+
 }
