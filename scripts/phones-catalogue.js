@@ -57,6 +57,9 @@ export default class PhonesCatalogue extends Component {
           <a href="#!/phones/${ phone.id }" class="thumb">
             <img alt="${ phone.name }" src="${ phone.imageUrl }">
           </a>
+          <div class="phones__btn-buy-wrapper">
+            <a class="btn btn-success" href="#!/add/${ phone.id }" data-element="phone-add-btn">Add</a>
+          </div>
           <a href="#!/phones/${ phone.id }">${ phone.name }</a>
           <p>${ phone.snippet }</p>
         </li>
@@ -76,6 +79,8 @@ export default class PhonesCatalogue extends Component {
       return;
     }
 
-    this._trigger('phoneSelected', phoneElement.dataset.phoneId);
+    if (event.target.dataset.element === 'phone-add-btn') {
+      this._trigger('phoneSelected', phoneElement.dataset.phoneId);
+    }
   }
 }

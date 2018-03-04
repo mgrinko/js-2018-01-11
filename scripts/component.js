@@ -18,4 +18,12 @@ export default class Component {
 
     this._element.dispatchEvent(customEvent);
   }
+
+  hide() {
+    this._element.classList.add('hidden');
+  }
+
+  show() {
+    this._element.classList.remove('hidden');
+  }
 }
