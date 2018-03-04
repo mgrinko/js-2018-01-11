@@ -1,10 +1,10 @@
 ﻿"use strict"
 
 class PhonesList extends Component {
-	constructor({ conteiner, phones, filterControl, sortControl, }) {
+	constructor({ container, phones, filterControl, sortControl, }) {
 		super();
 		
-		this._conteiner = conteiner;
+		this._container = container;
 		this._phones = phones;
 		this._items = [];
 		
@@ -12,30 +12,30 @@ class PhonesList extends Component {
 		this._sortControl = sortControl;
 		
 		this._component = document.createElement(`ul`);
+		this._component.className = `phones`;
+		this._component.setAttribute(`data-component`, `phones-list`);
 		
 		this._render();
 		
-		this._filterControl.element.addEventListener(`input`, () => {
+		this._filterControl.addEventListener(`input`, () => {
 			this.filter(event.target.value);
 		});
 		
-		this._sortControl.element.addEventListener(`change`, () => {
+		this._sortControl.addEventListener(`change`, () => {
 			this.sort(event.target.value);
 		});
 	}
 	
 	_render() {
-		this._component.className = `phones`;
-		
 		for (let phoneFeatures of this._phones) {
 			this._items.push (new PhonesListItem({
-											conteiner: this._component,
-											features: phoneFeatures,
-										}));
+				container: this._component,
+				features: phoneFeatures,
+			}));
 			//window[`phonesListItem${i}`] = new PhonesListItem(this._component, this._phones[i]);
 		}
 		
-		this._conteiner.append(this._component);
+		this._container.append(this._component);
 	};
 	
 	sort(feature) {

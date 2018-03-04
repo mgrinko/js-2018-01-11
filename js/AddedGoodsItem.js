@@ -1,10 +1,10 @@
 ﻿"use strict"
 
 class AddedGoodsItem extends Component {
-	constructor({ conteiner, good, }) {
+	constructor({ container, good, }) {
 		super();
 		
-		this._conteiner = conteiner;
+		this._container = container;
 		this._good = good;
 		
 		this._component = document.createElement(`li`);
@@ -43,7 +43,7 @@ class AddedGoodsItem extends Component {
 			`;
 		
 		this.addGood({
-				goodsList: this._conteiner,
+				goodsList: this._container,
 				good: this._component,
 			});
 	};

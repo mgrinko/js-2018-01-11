@@ -1,8 +1,8 @@
 ﻿"use strict"
 
 class Component {
-	constructor(conteiner) {
-		this._conteiner = conteiner;
+	constructor( container ) {
+		this._container = container;
 	}
 	
 	hide() {

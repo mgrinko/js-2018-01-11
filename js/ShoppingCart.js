@@ -1,10 +1,10 @@
 ﻿"use strict"
 
 class ShoppingCart extends Component {
-	constructor({ conteiner, goodsList, }) {
+	constructor({ container, goodsList, }) {
 		super();
 		
-		this._conteiner = conteiner;
+		this._container = container;
 		this._goodsList = goodsList;
 		this._goods = [];
 		
@@ -28,10 +28,10 @@ class ShoppingCart extends Component {
 			}
 		});
 		
-		this._goodsList.element.addEventListener(`click`, () => {
+		this._goodsList.addEventListener(`click`, () => {
 			if (event.target.closest(`a`)) {
 				this._addGoodsItem({
-					conteiner: this._addedGoods,
+					container: this._addedGoods,
 					good: event.target.closest(`li`),
 				});
 			}
@@ -51,11 +51,11 @@ class ShoppingCart extends Component {
 			<ul class="addedGoods"></ul>
 		`;
 		
-		this._conteiner.append(this._component);
+		this._container.append(this._component);
 	};
 	
-	_addGoodsItem({ conteiner, good, }) {
-		this._goods.push (new AddedGoodsItem({ conteiner, good, }));
+	_addGoodsItem({ container, good, }) {
+		this._goods.push (new AddedGoodsItem({ container, good, }));
 	};
 	
 	_isEmpty() {

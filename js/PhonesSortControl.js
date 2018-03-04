@@ -1,12 +1,13 @@
 ﻿"use strict"
 
 class PhonesSortControl extends Component {
-	constructor(conteiner) {
+	constructor({ container, }) {
 		super();
 		
-		this._conteiner = conteiner;
+		this._container = container;
 		
 		this._component = document.createElement(`p`);
+		this._component.setAttribute(`data-component`, `phones-sort-control`);
 		
 		this._render();
 	}
@@ -20,6 +21,6 @@ class PhonesSortControl extends Component {
 			</select>
 		`;
 		
-		this._conteiner.append(this._component);
+		this._container.append(this._component);
 	};
 }

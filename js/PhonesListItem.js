@@ -1,10 +1,10 @@
 ﻿"use strict"
 
 class PhonesListItem extends Component {
-	constructor({ conteiner, features, }) {
+	constructor({ container, features, }) {
 		super();
 		
-		this._conteiner = conteiner;
+		this._container = container;
 		this._features = features;
 		
 		this._component = document.createElement(`li`);
@@ -24,6 +24,6 @@ class PhonesListItem extends Component {
 		<p>${ this._features['snippet'] }</p>
 		`;
 		
-		this._conteiner.append(this._component);
+		this._container.append(this._component);
 	};
 }
