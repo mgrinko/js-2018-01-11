@@ -14,7 +14,7 @@ export default class PhonesCatalogue {
     this._element.addEventListener(eventName, callback);
   }
 
-  of(eventName, callback) {
+  off(eventName, callback) {
     this._element.removeEventListener(eventName, callback);
   }
 
