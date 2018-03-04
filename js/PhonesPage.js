@@ -17,8 +17,8 @@ class PhonesPage extends Component {
 		new PhonesSortControl({ container, });
 	}
 	
-	_phonesList({ container, phones, filterControl, sortControl, }) {
-		new PhonesList({ container, phones, filterControl, sortControl, });
+	_phonesList({ container, phones, }) {
+		new PhonesList({ container, phones, });
 	}
 	
 	_shoppingCart({ container, goodsList, }) {
@@ -50,8 +50,6 @@ class PhonesPage extends Component {
 		this._phonesList({
 			container: document.body.querySelector(`[data-component="phones-list"]`),
 			phones: PhonesService.getPhones(),
-			filterControl: document.body.querySelector(`[data-component="phones-filter-control"]`),
-			sortControl: document.body.querySelector(`[data-component="phones-sort-control"]`),
 		});
 		
 		this._shoppingCart({

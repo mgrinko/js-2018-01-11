@@ -1,15 +1,12 @@
 ﻿"use strict"
 
 class PhonesList extends Component {
-	constructor({ container, phones, filterControl, sortControl, }) {
+	constructor({ container, phones, }) {
 		super();
 		
 		this._container = container;
 		this._phones = phones;
 		this._items = [];
-		
-		this._filterControl = filterControl;
-		this._sortControl = sortControl;
 		
 		this._component = document.createElement(`ul`);
 		this._component.className = `phones`;
@@ -26,6 +23,11 @@ class PhonesList extends Component {
 		});
 	}
 	
+	setControls({ filterControl, sortControl, }) {
+		this._filterControl = filterControl;
+		this._sortControl = sortControl;
+	}
+	
 	_render() {
 		for (let phoneFeatures of this._phones) {
 			this._items.push (new PhonesListItem({
@@ -34,6 +36,11 @@ class PhonesList extends Component {
 			}));
 			//window[`phonesListItem${i}`] = new PhonesListItem(this._component, this._phones[i]);
 		}
+		
+		this.setControls({
+			filterControl: document.body.querySelector(`[data-component="phones-filter-control"]`),
+			sortControl: document.body.querySelector(`[data-component="phones-sort-control"]`),
+		});
 		
 		this._container.append(this._component);
 	};
