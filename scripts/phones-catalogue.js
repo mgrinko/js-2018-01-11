@@ -57,14 +57,7 @@ export default class PhonesCatalogue extends Component {
       let pA = personA.name.toUpperCase();
       let pB = personB.name.toUpperCase();
 
-      if (pA < pB) {
-        return -1;
-      }
-      if (pA > pB) {
-        return 1;
-      }
-
-      return 0;
+      return pA > pB ? 1 : -1;
     }
     // return sort data
     switch (sortValue) {
