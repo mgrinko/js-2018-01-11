@@ -8,14 +8,14 @@ class PhonesListItem extends Component {
 		this._features = features;
 		
 		this._component = document.createElement(`li`);
+		this._component.className = `thumbnail`;
+		this._component.setAttribute(`data-element`, `phone-item`);
 		this._component._features = features;
 		
 		this._render();
 	}
 	
 	_render() {
-		this._component.className = `thumbnail`;
-		
 		this._component.innerHTML = `
 		<a href="#!/phones/${ this._features['id'] }" class="thumb">
 			<img alt="${ this._features['id'] }" src="${ this._features['imageUrl'] }">
