@@ -6,7 +6,7 @@ export default class PhonesCatalogue extends Component {
   constructor({ element, sortElement, searchElement, phones }) {
     super();
     this._element = element;
-    this._sortEl = sortElement;
+    this._sortBy = 'name';
     this._searchEl = searchElement;
     this._phones = phones;
 
@@ -15,25 +15,23 @@ export default class PhonesCatalogue extends Component {
 
     // events
     this.on('click', this._onPhoneItemClicked.bind(this));
-    this._sortEl.addEventListener('change', this._onSelectChange.bind(this));
-    this._searchEl.addEventListener('keyup', this._onSearchInputKeyUp.bind(this));
   }
 
   // render method
-  _render(data) {
+  _render() {
     let itemsHtml = '';
+    let phones = this._searchText ? this._search() : this._phones;
 
-    for (let phone of data) {
+    for (let phone of phones) {
       itemsHtml += `
-        <li class="thumbnail"
-            data-element="phone-item"
-            data-phone-id="${phone.id}">
-            
+        <li class="thumbnail">
           <a href="#!/phones/${phone.id}" class="thumb">
             <img alt="${phone.name}" src="${phone.imageUrl}">
           </a>
           <a href="#!/phones/${phone.id}">${phone.name}</a>
           <p>${phone.snippet}</p>
+          <button data-element="phone-item"
+            data-phone-id="${phone.id}">add in cart</button>
         </li>
       `;
     }
@@ -45,9 +43,13 @@ export default class PhonesCatalogue extends Component {
   }
 
   // Sort method
-  _sort(data, sortBy) {
-    let sortValue = sortBy || this._sortEl.value;
+  sort(sortBy) {
+    this._sortBy = sortBy;
+    this._sort();
+    this._render();
+  }
 
+  _sort() {
     // sort for age
     function compareAge(personA, personB) {
       return personA.age - personB.age;
@@ -60,64 +62,34 @@ export default class PhonesCatalogue extends Component {
       return pA > pB ? 1 : -1;
     }
     // return sort data
-    switch (sortValue) {
+    switch (this._sortBy) {
       case 'age':
-        return data.sort(compareAge);
+        return this._phones.sort(compareAge);
       case 'name': {
-        return data.sort(compareName);
+        return this._phones.sort(compareName);
       }
       default:
-        return data.sort(compareAge);
+        return this._phones.sort(compareAge);
     }
   }
 
   // Search method
-  _search(data, text) {
-    let textUpper = text.toUpperCase();
+  search(inputText) {
+    this._searchText = inputText.toUpperCase();
+    this._search();
+    this._render();
+  }
+
+  _search() {
     let phonesSearch = [];
 
-    if (!data) {
-      return;
-    }
+    this._phones.forEach(phone => {
+      if (phone.snippet.toUpperCase().indexOf(this._searchText) !== -1) {
+        phonesSearch.push(phone);
+      }
+    });
 
-    if (textUpper.length > 0) {
-      data.forEach(phone => {
-        if (phone.snippet.toUpperCase().indexOf(textUpper) !== -1) {
-          phonesSearch.push(phone);
-        }
-      });
-    }
     return phonesSearch;
-  }
-
-  // search keyup events
-  _onSearchInputKeyUp(event) {
-    let inputText = event.target.value;
-    let phonesSearch = this._search(this._phones, inputText);
-
-    if (inputText.length === 0) {
-      this._render(this._sort(this._phones));
-      return;
-    }
-
-    if (inputText.length > 0 && phonesSearch.length !== 0) {
-      this._render(this._sort(phonesSearch));
-    } else {
-      this._element.innerHTML = '<h4>По вашему запросу ничего не найдено!</h4>';
-    }
-  }
-
-  // selected events
-  _onSelectChange(event) {
-    let inputSearchText = this._searchEl.value;
-    let sortName = event.target.value;
-
-    if (inputSearchText.length > 0) {
-      this._render(this._sort(this._search(this._phones, inputSearchText), sortName));
-      return;
-    }
-
-    this._render(this._sort(this._phones, event.target.value));
   }
 
   // item click events

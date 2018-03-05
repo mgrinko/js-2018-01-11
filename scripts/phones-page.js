@@ -3,6 +3,7 @@
 import PhonesCatalogue from './phones-catalogue.js';
 import PhonesService from './phones-service.js';
 import ShoppingCart from './shopping-cart.js';
+import PhonesControls from './phones-controle.js';
 
 export default class PhonesPage {
   constructor({ element }) {
@@ -19,8 +20,6 @@ export default class PhonesPage {
     // Phones catalogue initialize
     this._phonesCatalogue = new PhonesCatalogue({
       element: document.querySelector('[data-component="phones-catalogue"]'),
-      sortElement: document.querySelector('[data-component="phones-sort"]'),
-      searchElement: document.querySelector('[data-component="phones-search"]'),
       phones: PhonesService.getPhones()
     });
 
@@ -29,6 +28,25 @@ export default class PhonesPage {
       const phoneId = event.detail;
 
       this._shoppingCart.addItem(phoneId);
+    });
+
+    // Phones control initialize
+    this._phonesControls = new PhonesControls({
+      element: document.querySelector('[data-component="phones-control"]')
+    });
+
+    // Sort method
+    this._phonesControls.on('sort', event => {
+      const sortName = event.detail;
+
+      this._phonesCatalogue.sort(sortName);
+    });
+
+    // Search method
+    this._phonesControls.on('search', event => {
+      const searchText = event.detail;
+
+      this._phonesCatalogue.search(searchText);
     });
   }
 
