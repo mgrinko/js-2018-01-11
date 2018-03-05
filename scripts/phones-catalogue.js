@@ -80,7 +80,11 @@ export default class PhonesCatalogue extends Component {
     }
 
     if (event.target.dataset.element === 'phone-add-btn') {
-      this._trigger('phoneSelected', phoneElement.dataset.phoneId);
+      this._trigger('phoneAdded', phoneElement.dataset.phoneId);
+
+      return;
     }
+
+    this._trigger('phoneSelected', phoneElement.dataset.phoneId);
   }
 }
