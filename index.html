@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="app.css">
-  <script src="scripts/app.js" defer type="module"></script>
+  <link rel="stylesheet" href="Styles/app.css">
 </head>
+
 <body>
 
+<div>
+  <div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
 
-<header> Header</header>
+          <section>
 
-<div class="container-fluid"
-     data-page-container>
-  <div class="row">
-    <div class="col-md-2">
-      <!--Sidebar content-->
+            <p>
+              <input id="inSearch" class="form-control select2-offscreen" placeholder="Search:" >
+            </p>
 
-      <section>
-        <p>
-          Search:
-          <input>
-        </p>
+            <br/>
 
-        <p>
-          Sort by:
-          <select>
-            <option value="name">Alphabetical</option>
-            <option value="age">Newest</option>
-          </select>
-        </p>
-      </section>
+            <label for="sel1">Order by :</label>
+            <select id="inOrderBy" class="form-control">
+              <option value="age">Newest</option>
+              <option value="name">Alphabetical</option>
+            </select>            
 
-      <section data-component="shopping-cart"></section>
+          </section>
 
+        </div>
 
-    </div>
-    <div class="col-md-10">
-      <!--Body content-->
+        <div class="col-md-10"></div>
 
-      <div data-component="phones-catalogue"></div>
-
-      <div class="phone-details"></div>
-
+      </div>
     </div>
   </div>
 </div>
 
-<footer>Footer</footer>
-
-
-
 </body>
+
+  <script type="text/javascript" src="Data/phones.json"></script>
+  <script type="text/javascript" src="Scripts/indexVM.js"></script>
+
 </html>
