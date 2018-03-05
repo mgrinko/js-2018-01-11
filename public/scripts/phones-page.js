@@ -25,14 +25,12 @@ export default class PhonesPage {
       element: document.querySelector('[data-component="phones-catalogue"]'),
     });
 
+    PhonesService.getPhones(this._showPhones.bind(this));
+
     this._phonesCatalogue.on('phoneAdded', (event) => {
       const phoneId = event.detail;
 
       this._shoppingCart.addItem(phoneId);
-    });
-
-    PhonesService.getPhones((phones) => {
-      this._phonesCatalogue.setPhones(phones);
     });
 
     this._phonesCatalogue.on('phoneSelected', (event) => {
@@ -59,14 +57,19 @@ export default class PhonesPage {
     });
 
     this._controls.on('filter', (event) => {
-      const filterStr = event.detail;
-
+      PhonesService.getPhones(this._showPhones.bind(this), {
+        query: event.detail
+      });
     });
 
     this._controls.on('sort', (event) => {
       const fieldName = event.detail;
 
     });
+  }
+
+  _showPhones(phones) {
+    this._phonesCatalogue.setPhones(phones);
   }
 
   _render() {

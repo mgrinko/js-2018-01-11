@@ -13,7 +13,7 @@ function accept(req, res) {
   if (req.url.startsWith('/data/')) {
     setTimeout(() => {
       file.serve(req, res);
-    }, 5000);
+    }, 200);
   } else {
     req.url = '/public' + req.url;
 
