@@ -21,27 +21,23 @@ export default class PhonesPage {
       element: element.querySelector('[data-component="phones-controls"]')
     });
 
-    let catalogueInitPromise = PhonesService.getPhones().then(phones => {
-      this._phonesCatalogue = new PhonesCatalogue({
-        element: document.querySelector('[data-component="phones-catalogue"]'),
-        phones
-      });
+    this._phonesCatalogue = new PhonesCatalogue({
+      element: document.querySelector('[data-component="phones-catalogue"]'),
+      phones: PhonesService.getPhones(),
+    });
 
-      this._phonesCatalogue.on('phoneAdded', (event) => {
-        const phoneId = event.detail;
+    this._phonesCatalogue.on('phoneAdded', (event) => {
+      const phoneId = event.detail;
 
-        this._shoppingCart.addItem(phoneId);
-      });
+      this._shoppingCart.addItem(phoneId);
+    });
 
-      this._phonesCatalogue.on('phoneSelected', (event) => {
-        const phoneId = event.detail;
+    this._phonesCatalogue.on('phoneSelected', (event) => {
+      const phoneId = event.detail;
+      const phone = PhonesService.getPhone(phoneId);
 
-        PhonesService.getPhone(phoneId)
-          .then(phone => {
-            this._phoneDetails.show(phone);
-            this._phonesCatalogue.hide();
-          });
-      });
+      this._phoneDetails.show(phone);
+      this._phonesCatalogue.hide();
     });
 
     this._phoneDetails = new PhoneDetails({
@@ -54,13 +50,10 @@ export default class PhonesPage {
       this._shoppingCart.addItem(phoneId);
     });
 
-    catalogueInitPromise.then(() => {
-      this._phoneDetails.on('backBtnClicked', () => {
-        this._phonesCatalogue.show();
-        this._phoneDetails.hide();
-      })
+    this._phoneDetails.on('backBtnClicked', () => {
+      this._phonesCatalogue.show();
+      this._phoneDetails.hide();
     });
-    // PhonesService.getPhone('motorola-xoom-with-wi-fi').then(value => console.log(value));
 
     this._controls.on('filter', (event) => {
       const filterStr = event.detail;

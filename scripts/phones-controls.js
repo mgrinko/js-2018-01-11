@@ -1,7 +1,7 @@
 import Component from "./component.js";
 
 export default class PhonesControls extends Component {
-  constructor({element, sort, filter}) {
+  constructor({ element }) {
     super(element);
 
     this._render();
