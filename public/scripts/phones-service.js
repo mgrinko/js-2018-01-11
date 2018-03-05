@@ -8,7 +8,7 @@ export default class PhonesService {
       url += '?query=' + params.query;
     }
 
-    PhonesService.sendRequest('/data/phones/phones.json?query', (phones) => {
+    PhonesService.sendRequest(url, (phones) => {
       if (!params.query) {
         callback(phones);
 
