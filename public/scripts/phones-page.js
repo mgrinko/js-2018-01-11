@@ -35,10 +35,11 @@ export default class PhonesPage {
 
     this._phonesCatalogue.on('phoneSelected', (event) => {
       const phoneId = event.detail;
-      const phone = PhonesService.getPhone(phoneId);
 
-      this._phoneDetails.show(phone);
-      this._phonesCatalogue.hide();
+      PhonesService.getPhone(phoneId, (phone) => {
+        this._phoneDetails.show(phone);
+        this._phonesCatalogue.hide();
+      });
     });
 
     this._phoneDetails = new PhoneDetails({

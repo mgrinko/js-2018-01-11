@@ -23,8 +23,10 @@ export default class PhonesService {
     });
   }
 
-  static getPhone(id) {
-    return phoneDetails;
+  static getPhone(phoneId, callback) {
+    let url = `/data/phones/${ phoneId }.json`;
+
+    PhonesService.sendRequest(url, callback);
   }
 
   static sendRequest(url, callback) {
@@ -32,9 +34,9 @@ export default class PhonesService {
 
     xhr.open('GET', url, true);
 
-    xhr.send(); // (1)
+    xhr.send();
 
-    xhr.onload = function() { // (3)
+    xhr.onload = function() {
       if (xhr.status !== 200) {
         alert(xhr.status + ': ' + xhr.statusText);
       } else {
