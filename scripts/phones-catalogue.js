@@ -5,7 +5,7 @@ export default class PhonesCatalogue {
     this._element = element;
     this._phones = phones;
 
-    this._render();
+    this._render(this._phones);
 
     this.on('click', this._onPhoneItemClicked.bind(this));
   }
@@ -26,10 +26,10 @@ export default class PhonesCatalogue {
     this._element.dispatchEvent(customEvent);
   }
 
-  _render() {
+  _render(phonesArr) {
     let itemsHtml = '';
 
-    for (let phone of this._phones) {
+    for (let phone of phonesArr) {
       itemsHtml += `
         <li class="thumbnail"
             data-element="phone-item"
@@ -59,4 +59,42 @@ export default class PhonesCatalogue {
 
     this._trigger('phoneSelected', phoneElement.dataset.phoneId);
   }
+
+  filteredCatalog(searchedValue) {
+    let filteredArr = this._phones.filter(function(arrElement) {
+      return (arrElement.name.toLowerCase().indexOf(searchedValue) >= 0);
+    });
+
+    this._render(filteredArr);
+  }
+
+  sortedCatalog(sortedValue) {
+    let sortedArr;
+
+    if(sortedValue == 'age') {
+      sortedArr = this._phones.sort(function(a, b) {
+        return (a.age - b.age);
+      });
+    }
+    if(sortedValue == 'name') {
+      sortedArr = this._phones.sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+      });
+    }
+
+    this._render(sortedArr);
+  }
+
+  debounce(f, delay) {
+    let timer;
+
+    return function(...args) {
+      clearTimeout(timer);
+
+      timer = setTimeout(() => {
+        f.call(this, ...args);
+      }, delay);
+    }
+  }
+
 }
