@@ -3,6 +3,7 @@
 import PhonesCatalogue from './phones-catalogue.js';
 import PhonesService from './phones-service.js';
 import PhonesFilter from './phones-filter.js';
+import PhonesSort from './phones-sort.js';
 import ShoppingCart from './shopping-cart.js';
 
 export default class PhonesPage {
@@ -18,6 +19,10 @@ export default class PhonesPage {
 
     this._phonesFilter = new PhonesFilter({
       element: document.querySelector('[data-component="phones-filter"]')
+    });
+
+    this._phonesSort = new PhonesSort({
+      element: document.querySelector('[data-component="phones-sort"]')
     });
 
     this._phonesCatalogue = new PhonesCatalogue({
@@ -36,6 +41,12 @@ export default class PhonesPage {
 
       this._phonesCatalogue.searchPhone = this._phonesCatalogue.debounce(this._phonesCatalogue.filteredCatalog, 300);
       this._phonesCatalogue.searchPhone(searchedValue);
+    });
+
+    this._phonesSort.on('phoneSorted', (event) => {
+      const sortedValue = event.detail;
+
+        this._phonesCatalogue.sortedCatalog(sortedValue);
     });
 
 

@@ -12,7 +12,7 @@ export default class PhonesFilter {
   _render() {
     this._element.innerHTML = `
       <p>
-        Search:
+        <label>Search:</label>
         <input type="text" data-element="phone-filter">
       </p>
     `

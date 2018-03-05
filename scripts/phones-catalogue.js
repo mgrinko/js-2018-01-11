@@ -68,6 +68,23 @@ export default class PhonesCatalogue {
     this._render(filteredArr);
   }
 
+  sortedCatalog(sortedValue) {
+    let sortedArr;
+
+    if(sortedValue == 'age') {
+      sortedArr = this._phones.sort(function(a, b) {
+        return (a.age - b.age);
+      });
+    }
+    if(sortedValue == 'name') {
+      sortedArr = this._phones.sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+      });
+    }
+
+    this._render(sortedArr);
+  }
+
   debounce(f, delay) {
     let timer;
 

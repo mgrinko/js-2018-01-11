@@ -18,26 +18,21 @@
     <div class="col-md-2">
       <!--Sidebar content-->
 
-      <section>
+      <section class="sidebar">
+
         <div data-component="phones-filter"></div>
 
-        <p>
-          Sort by:
-          <select>
-            <option value="name">Alphabetical</option>
-            <option value="age">Newest</option>
-          </select>
-        </p>
+        <div data-component="phones-sort"></div>
+
+        <section class="shoping-cart" data-component="shopping-cart"></section>
+
       </section>
-
-      <section data-component="shopping-cart"></section>
-
 
     </div>
     <div class="col-md-10">
       <!--Body content-->
 
-      <div data-component="phones-catalogue"></div>
+      <div class="phones-catalogue" data-component="phones-catalogue"></div>
 
       <div class="phone-details"></div>
 
