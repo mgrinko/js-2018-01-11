@@ -28,15 +28,6 @@ class ShoppingCart extends Component {
 			}
 		});
 		
-		this._goodsList.addEventListener(`click`, () => {
-			if (event.target.closest(`a`)) {
-				this._addGoodsItem({
-					container: this._addedGoods,
-					good: event.target.closest(`li`),
-				});
-			}
-		});
-		
 		let observer = new MutationObserver(() => {
 			this._isEmpty();
 		});
@@ -54,7 +45,7 @@ class ShoppingCart extends Component {
 		this._container.append(this._component);
 	};
 	
-	_addGoodsItem({ container, good, }) {
+	addGoodsItem({ container, good, }) {
 		this._goods.push (new AddedGoodsItem({ container, good, }));
 	};
 	

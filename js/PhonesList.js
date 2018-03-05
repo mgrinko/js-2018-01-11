@@ -14,6 +14,16 @@ class PhonesList extends Component {
 		
 		this._render();
 		
+		this._component.addEventListener(`click`, () => {
+			if (event.target.closest(`a`)) {
+				let customEvent = new CustomEvent(`goodSelected`, {
+					detail: event.target.closest(`li`),
+				});
+				
+				this._component.dispatchEvent( customEvent );
+			}
+		});
+		
 		this._filterControl.addEventListener(`input`, () => {
 			this.filter(event.target.value);
 		});

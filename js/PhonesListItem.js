@@ -10,6 +10,7 @@ class PhonesListItem extends Component {
 		this._component = document.createElement(`li`);
 		this._component.className = `thumbnail`;
 		this._component.setAttribute(`data-element`, `phone-item`);
+		this._component.setAttribute(`data-phone-name`, `${ this._features['name'] }`);
 		this._component._features = features;
 		
 		this._render();

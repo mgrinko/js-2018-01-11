@@ -7,22 +7,27 @@ class PhonesPage extends Component {
 		this._container = container;
 		
 		this._render();
-	}
-	
-	_phonesFilterControl({ container, }) {
-		new PhonesFilterControl({ container, });
-	}
-	
-	_phonesSortControl({ container, }) {
-		new PhonesSortControl({ container, });
-	}
-	
-	_phonesList({ container, phones, }) {
-		new PhonesList({ container, phones, });
-	}
-	
-	_shoppingCart({ container, goodsList, }) {
-		new ShoppingCart({ container, goodsList, });
+		
+		this._phonesFilterControl = new PhonesFilterControl({ container: document.body.querySelector(`[data-component="controls"]`), });
+		
+		this._phonesSortControl = new PhonesSortControl({ container: document.body.querySelector(`[data-component="controls"]`), });
+		
+		this._phonesList = new PhonesList({
+			container: document.body.querySelector(`[data-component="phones-list"]`),
+			phones: PhonesService.getPhones(),
+		});
+		
+		this._shoppingCart = new ShoppingCart({
+			container: document.body.querySelector(`[data-component="shopping-cart"]`),
+			goodsList: document.body.querySelector(`[data-component="phones-list"]`),
+		});
+		
+		this._phonesList.element.addEventListener(`goodSelected`, () => {
+			this._shoppingCart.addGoodsItem({
+					container: this._shoppingCart._addedGoods,
+					good: event.detail,
+				});
+		});
 	}
 	
 	_render() {
@@ -42,19 +47,5 @@ class PhonesPage extends Component {
 				<div class="phone-details"></div> -->
 			</main>
 		`);
-		  
-		this._phonesFilterControl({ container: document.body.querySelector(`[data-component="controls"]`), });
-		
-		this._phonesSortControl({ container: document.body.querySelector(`[data-component="controls"]`), });
-		
-		this._phonesList({
-			container: document.body.querySelector(`[data-component="phones-list"]`),
-			phones: PhonesService.getPhones(),
-		});
-		
-		this._shoppingCart({
-			container: document.body.querySelector(`[data-component="shopping-cart"]`),
-			goodsList: document.body.querySelector(`[data-component="phones-list"]`),
-		});
 	};
 }
