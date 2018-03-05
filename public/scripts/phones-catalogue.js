@@ -1,47 +1,15 @@
 import Component from './component.js';
 
 export default class PhonesCatalogue extends Component {
-  constructor({element, phones}) {
+  constructor({element}) {
     super(element);
-    this._phones = phones;
-    this._sortTemplate = '';
-    this._filterTemplate = '';
-
-    this._render();
 
     this.on('click', this._onPhoneItemClicked.bind(this), '[data-element="phone-item"]');
   }
 
-  filterByName(filterStr) {
-    this._filterTemplate = filterStr.toLowerCase();
+  setPhones(phones) {
+    this._phones = phones;
     this._render();
-  }
-
-  sort(sortField) {
-    if (sortField !== this._sortTemplate) {
-      this._sortTemplate = sortField;
-      this._sort();
-      this._render();
-    }
-  }
-
-  _sort() {
-    let sortTypes = {
-      name(a, b) {
-        return a.name > b.name ? 1 : -1;
-      },
-      age(a, b) {
-        return a.age - b.age;
-      }
-    };
-
-    if (this._sortTemplate in sortTypes) {
-      this._phones.sort(sortTypes[this._sortTemplate]);
-    }
-  }
-
-  _filterByName() {
-    return this._phones.filter(phone => phone.name.toLowerCase().includes(this._filterTemplate));
   }
 
   _onPhoneItemClicked(event) {

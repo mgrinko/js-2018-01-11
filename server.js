@@ -10,20 +10,16 @@ var file = new static.Server('.', {
 });
 
 function accept(req, res) {
-  file.serve(req, res);
-}
+  if (req.url.startsWith('/data/')) {
+    setTimeout(() => {
+      file.serve(req, res);
+    }, 5000);
+  } else {
+    req.url = '/public' + req.url;
 
-// function accept(req, res) {
-//   if (req.url.startsWith('/data/')) {
-//     setTimeout(() => {
-//       file.serve(req, res);
-//     }, 2000);
-//   } else {
-//     req.url = '/public' + req.url;
-//
-//     file.serve(req, res);
-//   }
-// }
+    file.serve(req, res);
+  }
+}
 
 http.createServer(accept).listen(3000);
 
