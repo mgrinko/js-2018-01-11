@@ -3,17 +3,17 @@
 import Component from './component.js';
 
 export default class PhonesCatalogue extends Component {
-  constructor({ element, sortElement, searchElement, phones }) {
+  constructor({ element, phones }) {
     super();
     this._element = element;
     this._sortBy = 'name';
-    this._searchEl = searchElement;
     this._phones = phones;
 
     // default sort and render
     this._render(this._sort(this._phones));
 
     // events
+    this.on('click', this._onPhoneButtonClicked.bind(this));
     this.on('click', this._onPhoneItemClicked.bind(this));
   }
 
@@ -24,13 +24,14 @@ export default class PhonesCatalogue extends Component {
 
     for (let phone of phones) {
       itemsHtml += `
-        <li class="thumbnail">
+        <li class="thumbnail" data-element="phone-item"
+            data-phone-name="${phone.name}">
           <a href="#!/phones/${phone.id}" class="thumb">
             <img alt="${phone.name}" src="${phone.imageUrl}">
           </a>
           <a href="#!/phones/${phone.id}">${phone.name}</a>
           <p>${phone.snippet}</p>
-          <button data-element="phone-item"
+          <button data-element="phone-button"
             data-phone-id="${phone.id}">add in cart</button>
         </li>
       `;
@@ -92,14 +93,29 @@ export default class PhonesCatalogue extends Component {
     return phonesSearch;
   }
 
+  // button click events
+  _onPhoneButtonClicked(event) {
+    if (event.target.tagName === 'BUTTON') {
+      let phoneElement = event.target.closest('[data-element="phone-button"]');
+
+      if (!phoneElement) {
+        return;
+      }
+
+      this._trigger('phoneAddButton', phoneElement.dataset.phoneId);
+    }
+  }
+
   // item click events
   _onPhoneItemClicked(event) {
-    let phoneElement = event.target.closest('[data-element="phone-item"]');
+    if (event.target.tagName === 'A') {
+      let phoneElement = event.target.closest('[data-element="phone-item"]');
 
-    if (!phoneElement) {
-      return;
+      if (!phoneElement) {
+        return;
+      }
+
+      this._trigger('phoneSelected', phoneElement.dataset.phoneName);
     }
-
-    this._trigger('phoneSelected', phoneElement.dataset.phoneId);
   }
 }
