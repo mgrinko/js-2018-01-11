@@ -1,4 +1,4 @@
-import Component from "./component.js";
+import Component from './component.js';
 
 export default class PhonesControls extends Component {
   constructor({ element }) {
@@ -6,16 +6,15 @@ export default class PhonesControls extends Component {
 
     this._render();
 
-    element.querySelector('[data-element="filter-control"]')
-      .addEventListener('input', (e) => {
-        this._trigger('filter', e.target.value);
-      });
-
+    let filterElem = element.querySelector('[data-element="filter-control"]');
     let sortElem = element.querySelector('[data-element="sort-control"]');
 
-    sortElem.value = '';
-    sortElem.addEventListener('change', (e) => {
-      this._trigger('sort', e.target.value);
+    filterElem.addEventListener('input', () => {
+      this._trigger('filter', filterElem.value);
+    });
+
+    sortElem.addEventListener('change', () => {
+      this._trigger('sort', sortElem.value);
     });
   }
 

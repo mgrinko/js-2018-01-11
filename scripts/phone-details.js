@@ -4,7 +4,9 @@ export default class PhoneDetails extends Component {
   constructor({element}) {
     super(element);
 
-    this._element.addEventListener('click', this._onClick.bind(this));
+    this.on('click', this._triggerBack.bind(this), '[data-element="back-btn"]');
+    this.on('click', this._triggerAdd.bind(this), '[data-element="add-btn"]');
+    this.on('click', this._onImgClick.bind(this), 'img');
   }
 
   show(phone) {
@@ -12,22 +14,16 @@ export default class PhoneDetails extends Component {
     super.show();
   }
 
-  _onClick(e) {
-    if (e.target.dataset.element === 'back-btn') {
-      this._trigger('backBtnClicked');
+  _triggerBack() {
+    this._trigger('backBtnClicked');
+  }
 
-      return;
-    }
+  _triggerAdd() {
+    this._trigger('addBtnClicked', this._element.dataset.phoneId);
+  }
 
-    if (e.target.dataset.element === 'add-btn') {
-      this._trigger('addBtnClicked', this._element.dataset.phoneId);
-
-      return;
-    }
-
-    if (e.target.tagName === 'IMG') {
-      this._element.querySelector('img.phone').src = e.target.src;
-    }
+  _onImgClick(e) {
+    this._element.querySelector('img.phone').src = e.target.src;
   }
 
   _render(phone) {
@@ -37,7 +33,7 @@ export default class PhoneDetails extends Component {
         <img class="phone" src="${phone.images[0]}">
 
         <button data-element="back-btn">Back to list</button>
-        <button data-element="add-btn">Add to basket</button>
+        <button data-element="add-btn"><b>Add to basket</b></button>
 
 
         <h1>${phone.name}</h1>

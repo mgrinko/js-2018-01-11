@@ -9,7 +9,7 @@ export default class PhonesCatalogue extends Component {
 
     this._render();
 
-    this.on('click', this._onPhoneItemClicked.bind(this));
+    this.on('click', this._onPhoneItemClicked.bind(this), '[data-element="phone-item"]');
   }
 
   filterByName(filterStr) {
@@ -44,6 +44,18 @@ export default class PhonesCatalogue extends Component {
     return this._phones.filter(phone => phone.name.toLowerCase().includes(this._filterTemplate));
   }
 
+  _onPhoneItemClicked(event) {
+    let phoneElement = event.target.closest('[data-element="phone-item"]');
+
+    if (event.target.dataset.element === 'phone-add-btn') {
+      this._trigger('phoneAdded', phoneElement.dataset.phoneId);
+
+      return;
+    }
+
+    this._trigger('phoneSelected', phoneElement.dataset.phoneId);
+  }
+
   _render() {
     let itemsHtml = '';
     let phones = this._filterTemplate ? this._filterByName() : this._phones;
@@ -70,21 +82,5 @@ export default class PhonesCatalogue extends Component {
       <h2>Catalogue</h2>
       <ul class="phones">${ itemsHtml }</ul>
     `;
-  }
-
-  _onPhoneItemClicked(event) {
-    let phoneElement = event.target.closest('[data-element="phone-item"]');
-
-    if (!phoneElement) {
-      return;
-    }
-
-    if (event.target.dataset.element === 'phone-add-btn') {
-      this._trigger('phoneAdded', phoneElement.dataset.phoneId);
-
-      return;
-    }
-
-    this._trigger('phoneSelected', phoneElement.dataset.phoneId);
   }
 }
