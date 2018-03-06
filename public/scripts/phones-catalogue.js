@@ -29,10 +29,10 @@ export default class PhonesCatalogue extends Component {
           <a href="#!/phones/${phone.id}" class="thumb">
             <img alt="${phone.name}" src="${phone.imageUrl}">
           </a>
-          <a href="#!/phones/${phone.id}">${phone.name}</a>
+          <a href="#!/phones/${phone.id}" class="phone-name">${phone.name}</a>
           <p>${phone.snippet}</p>
           <button data-element="phone-button"
-            data-phone-id="${phone.id}">add in cart</button>
+            data-phone-id="${phone.id}" class="add-item">add in cart</button>
         </li>
       `;
     }
@@ -95,7 +95,7 @@ export default class PhonesCatalogue extends Component {
 
   // button click events
   _onPhoneButtonClicked(event) {
-    if (event.target.tagName === 'BUTTON') {
+    if (event.target.className === 'add-item') {
       let phoneElement = event.target.closest('[data-element="phone-button"]');
 
       if (!phoneElement) {
@@ -108,7 +108,7 @@ export default class PhonesCatalogue extends Component {
 
   // item click events
   _onPhoneItemClicked(event) {
-    if (event.target.tagName === 'A') {
+    if (event.target.className === 'phone-name') {
       let phoneElement = event.target.closest('[data-element="phone-item"]');
 
       if (!phoneElement) {

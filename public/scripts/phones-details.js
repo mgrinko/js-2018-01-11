@@ -23,7 +23,7 @@ export default class PhonesDetails extends Component {
       '\n' +
       '    <img class="phone" src="img/phones/motorola-xoom-with-wi-fi.0.jpg">\n' +
       '\n' +
-      '    <button data-element="back">Back to list</button>\n' +
+      '    <button class="back">Back to list</button>\n' +
       '    <button>Add to basket</button>\n' +
       '\n' +
       '\n' +
@@ -161,8 +161,8 @@ export default class PhonesDetails extends Component {
   }
 
   _onBackButtonClicked(event) {
-    let backButton = event.target.closest('[data-element="back"]');
-
-    this._trigger('backButtonClicked');
+    if (event.target.className === 'back') {
+      this._trigger('backButtonClicked');
+    }
   }
 }
