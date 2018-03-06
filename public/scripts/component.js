@@ -5,8 +5,14 @@ export default class Component {
     this._element = element;
   }
 
-  on(eventName, callback) {
-    this._element.addEventListener(eventName, callback);
+  on(eventName, callback, selector = '') {
+    this._element.addEventListener(eventName, event => {
+      if (selector && !event.target.closest(selector)) {
+        return;
+      }
+
+      callback(event);
+    });
   }
 
   off(eventName, callback) {

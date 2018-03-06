@@ -4,165 +4,168 @@ import Component from './component.js';
 
 export default class PhonesDetails extends Component {
   constructor({ element }) {
-    super();
+    super(element);
     this._element = element;
     this._phonesCatalogue = document.querySelector('[data-page-phones-catalogue]');
 
-    this.on('click', this._onBackButtonClicked.bind(this));
+    this.on('click', this._triggerBack.bind(this), '[data-element="back-btn"]');
+    this.on('click', this._triggerAdd.bind(this), '[data-element="add-btn"]');
+    this.on('click', this._onImgClick.bind(this), 'img');
   }
 
   showElement(phone) {
+    this._render(phone);
     this.show();
-    this._phone = phone;
-    this._render();
   }
 
-  _render() {
-    this._element.innerHTML =
-      '<div>\n' +
-      '\n' +
-      '    <img class="phone" src="img/phones/motorola-xoom-with-wi-fi.0.jpg">\n' +
-      '\n' +
-      '    <button class="back">Back to list</button>\n' +
-      '    <button>Add to basket</button>\n' +
-      '\n' +
-      '\n' +
-      '    <h1>' +
-      this._phone +
-      '</h1>\n' +
-      '\n' +
-      '    <p>Motorola XOOM with Wi-Fi has a super-powerful dual-core processor and Android™ 3.0 (Honeycomb) — the Android platform designed specifically for tablets. With its 10.1-inch HD widescreen display, you’ll enjoy HD video in a thin, light, powerful and upgradeable tablet.</p>\n' +
-      '\n' +
-      '    <ul class="phone-thumbs">\n' +
-      '      <li>\n' +
-      '        <img src="img/phones/motorola-xoom-with-wi-fi.0.jpg">\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <img src="img/phones/motorola-xoom-with-wi-fi.1.jpg">\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <img src="img/phones/motorola-xoom-with-wi-fi.2.jpg">\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <img src="img/phones/motorola-xoom-with-wi-fi.3.jpg">\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <img src="img/phones/motorola-xoom-with-wi-fi.4.jpg">\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <img src="img/phones/motorola-xoom-with-wi-fi.5.jpg">\n' +
-      '      </li>\n' +
-      '    </ul>\n' +
-      '\n' +
-      '    <ul class="specs">\n' +
-      '      <li>\n' +
-      '        <span>Availability and Networks</span>\n' +
-      '        <dl>\n' +
-      '          <dt>Availability</dt>\n' +
-      '          <dd></dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Battery</span>\n' +
-      '        <dl>\n' +
-      '          <dt>Type</dt>\n' +
-      '          <dd>Other ( mAH)</dd>\n' +
-      '          <dt>Talk Time</dt>\n' +
-      '          <dd>24 hours</dd>\n' +
-      '          <dt>Standby time (max)</dt>\n' +
-      '          <dd>336 hours</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Storage and Memory</span>\n' +
-      '        <dl>\n' +
-      '          <dt>RAM</dt>\n' +
-      '          <dd>1000MB</dd>\n' +
-      '          <dt>Internal Storage</dt>\n' +
-      '          <dd>32000MB</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Connectivity</span>\n' +
-      '        <dl>\n' +
-      '          <dt>Network Support</dt>\n' +
-      '          <dd></dd>\n' +
-      '          <dt>WiFi</dt>\n' +
-      '          <dd>802.11 b/g/n</dd>\n' +
-      '          <dt>Bluetooth</dt>\n' +
-      '          <dd>Bluetooth 2.1</dd>\n' +
-      '          <dt>Infrared</dt>\n' +
-      '          <dd>✘</dd>\n' +
-      '          <dt>GPS</dt>\n' +
-      '          <dd>✓</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Android</span>\n' +
-      '        <dl>\n' +
-      '          <dt>OS Version</dt>\n' +
-      '          <dd>Android 3.0</dd>\n' +
-      '          <dt>UI</dt>\n' +
-      '          <dd>Honeycomb</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Size and Weight</span>\n' +
-      '        <dl>\n' +
-      '          <dt>Dimensions</dt>\n' +
-      '          <dd>249.1 mm (w)</dd>\n' +
-      '          <dd>167.8 mm (h)</dd>\n' +
-      '          <dd>12.9 mm (d)</dd>\n' +
-      '          <dt>Weight</dt>\n' +
-      '          <dd>708.0 grams</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Display</span>\n' +
-      '        <dl>\n' +
-      '          <dt>Screen size</dt>\n' +
-      '          <dd>10.1 inches</dd>\n' +
-      '          <dt>Screen resolution</dt>\n' +
-      '          <dd>WXGA (1200 x 800)</dd>\n' +
-      '          <dt>Touch screen</dt>\n' +
-      '          <dd>✓</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Hardware</span>\n' +
-      '        <dl>\n' +
-      '          <dt>CPU</dt>\n' +
-      '          <dd>1 GHz Dual Core Tegra 2</dd>\n' +
-      '          <dt>USB</dt>\n' +
-      '          <dd>USB 2.0</dd>\n' +
-      '          <dt>Audio / headphone jack</dt>\n' +
-      '          <dd>3.5mm</dd>\n' +
-      '          <dt>FM Radio</dt>\n' +
-      '          <dd>✘</dd>\n' +
-      '          <dt>Accelerometer</dt>\n' +
-      '          <dd>✓</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Camera</span>\n' +
-      '        <dl>\n' +
-      '          <dt>Primary</dt>\n' +
-      '          <dd>5.0 megapixels</dd>\n' +
-      '          <dt>Features</dt>\n' +
-      '          <dd>Flash, Video</dd>\n' +
-      '        </dl>\n' +
-      '      </li>\n' +
-      '      <li>\n' +
-      '        <span>Additional Features</span>\n' +
-      '        <dd>Sensors: proximity, ambient light, barometer, gyroscope</dd>\n' +
-      '      </li>\n' +
-      '    </ul>\n' +
-      '  </div>';
+  _triggerBack() {
+    this._trigger('backBtnClicked');
   }
 
-  _onBackButtonClicked(event) {
-    if (event.target.className === 'back') {
-      this._trigger('backButtonClicked');
-    }
+  _triggerAdd() {
+    this._trigger('addBtnClicked', this._element.dataset.phoneId);
+  }
+
+  _onImgClick(event) {
+    this._element.querySelector('[data-element="show-image"]').src = event.target.src;
+  }
+
+  _render(phone) {
+    this._element.innerHTML = `
+      <div>
+        <div>
+          <img class="phone" src="${phone.images[0]}" data-element="show-image">
+    
+          <button data-element="back-btn">Back to list</button>
+          <button data-element="add-btn">Add to basket</button>
+      
+      
+          <h1>Motorola XOOM™ with Wi-Fi</h1>
+      
+          <p>Motorola XOOM with Wi-Fi has a super-powerful dual-core processor and Android™ 3.0 (Honeycomb) — the Android platform designed specifically for tablets. With its 10.1-inch HD widescreen display, you’ll enjoy HD video in a thin, light, powerful and upgradeable tablet.</p>
+      
+          <ul class="phone-thumbs">
+            ${phone.images
+              .map(
+                imgSrc =>
+                  `
+                <li>
+                  <img src="${imgSrc}">
+                </li>  
+              `
+              )
+              .join('')}
+          </ul>
+      
+          <ul class="specs">
+            <li>
+              <span>Availability and Networks</span>
+              <dl>
+                <dt>Availability</dt>
+                <dd>${phone.availability.join(' ') || '-'}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Battery</span>
+              <dl>
+                <dt>Type</dt>
+                <dd>${phone.battery.type}</dd>
+                <dt>Talk Time</dt>
+                <dd>${phone.battery.talkTime || '-'}</dd>
+                <dt>Standby time (max)</dt>
+                <dd>${phone.battery.standbyTime || '-'}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Storage and Memory</span>
+              <dl>
+                <dt>RAM</dt>
+                <dd>${phone.storage.ram}</dd>
+                <dt>Internal Storage</dt>
+                <dd>${phone.storage.flash}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Connectivity</span>
+              <dl>
+                <dt>Network Support</dt>
+                <dd>${phone.connectivity.cell}</dd>
+                <dt>WiFi</dt>
+                <dd>${phone.connectivity.wifi}</dd>
+                <dt>Bluetooth</dt>
+                <dd>${phone.connectivity.bluetooth}</dd>
+                <dt>Infrared</dt>
+                <dd>${phone.connectivity.infrared ? '✓' : '✘'}</dd>
+                <dt>GPS</dt>
+                <dd>${phone.connectivity.gps ? '✓' : '✘'}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Android</span>
+              <dl>
+                <dt>OS Version</dt>
+                <dd>${phone.android.os}</dd>
+                <dt>UI</dt>
+                <dd>${phone.android.ui}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Size and Weight</span>
+              <dl>
+                <dt>Dimensions</dt>
+                ${phone.sizeAndWeight.dimensions
+                  .map(item => {
+                    `<dd>${item}</dd>`;
+                  })
+                  .join('')}
+                <dt>Weight</dt>
+                <dd>${phone.sizeAndWeight.weight}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Display</span>
+              <dl>
+                <dt>Screen size</dt>
+                <dd>${phone.display.screenSize}</dd>
+                <dt>Screen resolution</dt>
+                <dd>${phone.display.screenResolution}</dd>
+                <dt>Touch screen</dt>
+                <dd>${phone.display.touchScreen ? '✓' : '✘'}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Hardware</span>
+              <dl>
+                <dt>CPU</dt>
+                <dd>${phone.hardware.cpu}</dd>
+                <dt>USB</dt>
+                <dd>${phone.hardware.cpu}</dd>
+                <dt>Audio / headphone jack</dt>
+                <dd>${phone.hardware.cpu}</dd>
+                <dt>FM Radio</dt>
+                <dd>${phone.hardware.cpu ? '✓' : '✘'}</dd>
+                <dt>Accelerometer</dt>
+                <dd>${phone.hardware.cpu ? '✓' : '✘'}</dd>
+                ${phone.hardware.physicalKeyboard ? '<dt>Physical keyboard</dt><dd>✓</dd>' : ''}
+              </dl>
+            </li>
+            <li>
+              <span>Camera</span>
+              <dl>
+                <dt>Primary</dt>
+                <dd>${phone.camera.primary}</dd>
+                <dt>Features</dt>
+                <dd>${phone.camera.features}</dd>
+              </dl>
+            </li>
+            <li>
+              <span>Additional Features</span>
+              <dd>${phone.additionalFeatures}</dd>
+            </li>
+          </ul>
+        </div>
+      </div>
+      `;
+    this._element.dataset.phoneId = phone.id;
   }
 }

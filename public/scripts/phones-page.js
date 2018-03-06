@@ -18,6 +18,11 @@ export default class PhonesPage {
       phones: PhonesService.getPhones()
     });
 
+    // get all phones
+    PhonesService.getPhones()
+      .then(this._showPhones.bind(this))
+      .catch(error => console.error(error.message));
+
     // Shopping cart initialize
     this._shoppingCart = new ShoppingCart({
       element: this._element.querySelector('[data-component="shopping-cart"]'),
@@ -25,7 +30,7 @@ export default class PhonesPage {
     });
 
     // Add phone in shopping cart
-    this._phonesCatalogue.on('phoneAddButton', event => {
+    this._phonesCatalogue.on('phoneAdded', event => {
       const phoneId = event.detail;
 
       this._shoppingCart.addItem(phoneId);
@@ -38,16 +43,16 @@ export default class PhonesPage {
 
     // Sort method
     this._phonesControls.on('sort', event => {
-      const sortName = event.detail;
-
-      this._phonesCatalogue.sort(sortName);
+      PhonesService.getPhones({ sort: event.detail })
+        .then(this._showPhones.bind(this))
+        .catch(error => console.error(error.message));
     });
 
     // Search method
     this._phonesControls.on('search', event => {
-      const searchText = event.detail;
-
-      this._phonesCatalogue.search(searchText);
+      PhonesService.getPhones({ query: event.detail })
+        .then(this._showPhones.bind(this))
+        .catch(error => console.error(error.message));
     });
 
     // Phones details initialize
@@ -55,17 +60,34 @@ export default class PhonesPage {
       element: this._element.querySelector('[data-component="phones-details"]')
     });
 
+    // Show selected phone
     this._phonesCatalogue.on('phoneSelected', event => {
-      const phone = event.detail;
+      const phoneId = event.detail;
 
-      this._phonesCatalogue.hide();
-      this._phonesDetails.showElement(phone);
+      let phonePromise = PhonesService.getPhone(phoneId);
+
+      phonePromise.then(phone => {
+        this._phonesCatalogue.hide();
+        this._phonesDetails.showElement(phone);
+      });
     });
 
-    this._phonesDetails.on('backButtonClicked', event => {
+    // Phone details back btn
+    this._phonesDetails.on('backBtnClicked', () => {
       this._phonesDetails.hide();
       this._phonesCatalogue.show();
     });
+
+    // Phone details add btn
+    this._phonesDetails.on('addBtnClicked', event => {
+      const phoneId = event.detail;
+
+      this._shoppingCart.addItem(phoneId);
+    });
+  }
+
+  _showPhones(phones) {
+    this._phonesCatalogue.setPhones(phones);
   }
 
   _render() {
