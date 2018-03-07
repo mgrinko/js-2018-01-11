@@ -22,9 +22,23 @@ export default class PhonesService {
   static getPhones(params = {}) {
     let url = `/data/phones/phones.json`;
 
+    // default
     if (!params.query && !params.sort) {
-      // default
       return PhonesService.sendRequest(url)
+        .then(phones => {
+          return PhonesService.sort(phones, params);
+        })
+        .catch(error => console.error(error.message));
+    }
+
+    // filter && sort
+    if (params.query && params.sort) {
+      url += '?query=' + params.query + '?sort=' + params.sort;
+
+      return PhonesService.sendRequest(url)
+        .then(phones => {
+          return PhonesService.filter(phones, params);
+        })
         .then(phones => {
           return PhonesService.sort(phones, params);
         })
@@ -38,6 +52,9 @@ export default class PhonesService {
       return PhonesService.sendRequest(url)
         .then(phones => {
           return PhonesService.filter(phones, params);
+        })
+        .then(phones => {
+          return PhonesService.sort(phones, params);
         })
         .catch(error => console.error(error.message));
     }

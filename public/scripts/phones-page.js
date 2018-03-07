@@ -43,7 +43,7 @@ export default class PhonesPage {
 
     // Sort method
     this._phonesControls.on('sort', event => {
-      PhonesService.getPhones({ sort: event.detail })
+      PhonesService.getPhones(event.detail)
         .then(this._showPhones.bind(this))
         .catch(error => console.error(error.message));
     });

@@ -13,7 +13,20 @@ export default class PhonesControls extends Component {
     let sortElem = element.querySelector('[data-element="phones-sort"]');
 
     sortElem.addEventListener('change', () => {
-      this._trigger('sort', sortElem.value);
+      // if (searchElem.value.length > 0) {
+      //   let params = {
+      //     query: searchElem.value,
+      //     sort: sortElem.value
+      //   };
+      //   this._trigger('sort', params);
+      //   return;
+      // }
+      let params = {
+        query: searchElem.value,
+        sort: sortElem.value
+      };
+
+      this._trigger('sort', params);
     });
 
     searchElem.addEventListener('input', () => {
