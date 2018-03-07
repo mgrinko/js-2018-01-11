@@ -50,7 +50,7 @@ export default class PhonesPage {
 
     // Search method
     this._phonesControls.on('search', event => {
-      PhonesService.getPhones({ query: event.detail })
+      PhonesService.getPhones(event.detail)
         .then(this._showPhones.bind(this))
         .catch(error => console.error(error.message));
     });
