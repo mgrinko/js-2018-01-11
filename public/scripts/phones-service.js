@@ -1,6 +1,7 @@
 'use strict';
 
-const BASE_API_URL = 'http://localhost:3000/data';
+const BASE_API_URL = 'https://mgrinko.github.io/js-2018-01-11/data';
+// const BASE_API_URL = 'http://localhost:3000/data';
 
 export default class PhonesService {
   static getPhones(callback, { query, order: orderField } = {}) {
