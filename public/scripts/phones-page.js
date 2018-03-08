@@ -25,7 +25,9 @@ export default class PhonesPage {
       element: document.querySelector('[data-component="phones-catalogue"]'),
     });
 
-    PhonesService.getPhones(this._showPhones.bind(this));
+    PhonesService.getPhones()
+      .then(result => this._phonesCatalogue.setPhones(result))
+      .catch(error => console.log(error));
 
     this._phonesCatalogue.on('phoneAdded', (event) => {
       const phoneId = event.detail;
@@ -36,10 +38,11 @@ export default class PhonesPage {
     this._phonesCatalogue.on('phoneSelected', (event) => {
       const phoneId = event.detail;
 
-      PhonesService.getPhone(phoneId, (phone) => {
-        this._phoneDetails.show(phone);
-        this._phonesCatalogue.hide();
-      });
+      PhonesService.getPhone(phoneId)
+        .then(phone => {
+          this._phoneDetails.show(phone);
+          this._phonesCatalogue.hide();
+        }).catch(error => console.log(error))
     });
 
     this._phoneDetails = new PhoneDetails({
@@ -58,19 +61,15 @@ export default class PhonesPage {
     });
 
     this._controls.on('filter', (event) => {
-      PhonesService.getPhones(this._showPhones.bind(this), {
-        query: event.detail
-      });
+      PhonesService.getPhones({ query: event.detail })
+        .then(result => this._phonesCatalogue.setPhones(result))
+        .catch(error => console.log(error))
     });
 
     this._controls.on('sort', (event) => {
       const fieldName = event.detail;
 
     });
-  }
-
-  _showPhones(phones) {
-    this._phonesCatalogue.setPhones(phones);
   }
 
   _render() {
