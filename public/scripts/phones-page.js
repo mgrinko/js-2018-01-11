@@ -14,17 +14,15 @@ export default class PhonesPage {
 
     this._render();
 
-    this._shoppingCart = new ShoppingCart({
-      element: document.querySelector('[data-component="shopping-cart"]'),
-      items: [1, 2, 3],
-    });
+    this._initPhonesCatalogue();
+    this._initControls();
+    this._initShoppingCart();
+    this._initPhoneDetails();
+  }
 
-    this._controls = new PhonesControls({
-      element: element.querySelector('[data-component="phones-controls"]')
-    });
-
+  _initPhonesCatalogue() {
     this._phonesCatalogue = new PhonesCatalogue({
-      element: document.querySelector('[data-component="phones-catalogue"]'),
+      element: this._element.querySelector('[data-component="phones-catalogue"]'),
     });
 
     PhonesService.getPhones(this._showPhones.bind(this));
@@ -43,20 +41,11 @@ export default class PhonesPage {
         this._phonesCatalogue.hide();
       });
     });
+  }
 
-    this._phoneDetails = new PhoneDetails({
-      element: element.querySelector('[data-component="phone-details"]')
-    });
-
-    this._phoneDetails.on('addBtnClicked', e => {
-      let phoneId = e.detail;
-
-      this._shoppingCart.addItem(phoneId);
-    });
-
-    this._phoneDetails.on('backBtnClicked', () => {
-      this._phonesCatalogue.show();
-      this._phoneDetails.hide();
+  _initControls() {
+    this._controls = new PhonesControls({
+      element: this._element.querySelector('[data-component="phones-controls"]')
     });
 
     this._controls.on('filter', (event) => {
@@ -77,6 +66,32 @@ export default class PhonesPage {
       });
     });
   }
+
+  _initShoppingCart() {
+    this._shoppingCart = new ShoppingCart({
+      element: this._element.querySelector('[data-component="shopping-cart"]'),
+      items: [1, 2, 3],
+    });
+  }
+
+  _initPhoneDetails() {
+    this._phoneDetails = new PhoneDetails({
+      element: this._element.querySelector('[data-component="phone-details"]')
+    });
+
+    this._phoneDetails.on('addBtnClicked', e => {
+      let phoneId = e.detail;
+
+      this._shoppingCart.addItem(phoneId);
+    });
+
+    this._phoneDetails.on('backBtnClicked', () => {
+      this._phonesCatalogue.show();
+      this._phoneDetails.hide();
+    });
+  }
+
+
 
   _showPhones(phones) {
     this._phonesCatalogue.setPhones(phones);
