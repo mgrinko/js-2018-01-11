@@ -1,30 +1,46 @@
 'use strict';
 
-export default class PhonesService {
-  static getPhones(callback, params = {}) {
-    let url = '/data/phones/phones.json';
+const BASE_API_URL = 'https://mgrinko.github.io/js-2018-01-11/data';
+// const BASE_API_URL = 'http://localhost:3000/data';
 
-    if (params.query) {
-      url += '?query=' + params.query;
+export default class PhonesService {
+  static getPhones(callback, { query, order: orderField } = {}) {
+    let url = BASE_API_URL + '/phones/phones.json';
+    const requestParts = [];
+
+    if (query) {
+      requestParts.push(`query=${ query }`);
+    }
+
+    if (orderField) {
+      requestParts.push(`order=${ orderField }`);
+    }
+
+    if (requestParts.length > 0) {
+      url += '?' + requestParts.join('&');
     }
 
     PhonesService.sendRequest(url, (phones) => {
-      if (!params.query) {
-        callback(phones);
+      let filteredPhones = phones;
 
-        return ;
+      if (query) {
+        const normalizedQuery = query.toLowerCase();
+
+        filteredPhones = filteredPhones.filter((phone) => {
+          return phone.name.toLowerCase().includes(normalizedQuery);
+        });
       }
 
-      let filteredPhones = phones.filter((phone) => {
-        return phone.name.toLowerCase().includes(params.query);
-      });
+      if (orderField) {
+        filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
+      }
 
       callback(filteredPhones);
     });
   }
 
   static getPhone(phoneId, callback) {
-    let url = `/data/phones/${ phoneId }.json`;
+    let url = BASE_API_URL + `/phones/${ phoneId }.json`;
 
     PhonesService.sendRequest(url, callback);
   }
