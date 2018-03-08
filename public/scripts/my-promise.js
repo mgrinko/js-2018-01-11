@@ -42,6 +42,8 @@ class MyPromise {
     } else if (this._status === 'rejected') {
       errorCallback(this._result);
     }
+
+    return new Promise(() => {});
   }
 
   catch(callback) {

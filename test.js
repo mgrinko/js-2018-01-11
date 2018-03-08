@@ -31,15 +31,20 @@ function getUserProgressOnCourse(userId, courseId, callback, errorCallback) {
 }
 
 
+let academyPromise = getAcademy('academy');
 
 
-let academyRequestResult = getAcademy('academy');
+let nextPromise = academyPromise
+  .then((academy) => getUser(1))
+  .then((user) => {
+    this._currentUser = user;
 
-academyRequestResult.then(callback1);
-academyRequestResult.then(callback2);
-academyRequestResult.then(callback3);
-academyRequestResult.then(callback4);
-academyRequestResult.catch(errorCallback);
+    return getCourse(123)
+  })
+  .then((course) => getUserProgressOnCourse(course.id, this._currentUser.id))
+  .then((progress) => {
+    // ...
+  });
 
 
 
