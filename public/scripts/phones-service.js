@@ -1,8 +1,10 @@
 'use strict';
 
+const BASE_API_URL = 'http://localhost:3000/data';
+
 export default class PhonesService {
   static getPhones(callback, { query, order: orderField } = {}) {
-    let url = '/data/phones/phones.json';
+    let url = BASE_API_URL + '/phones/phones.json';
     const requestParts = [];
 
     if (query) {
@@ -37,7 +39,7 @@ export default class PhonesService {
   }
 
   static getPhone(phoneId, callback) {
-    let url = `/data/phones/${ phoneId }.json`;
+    let url = BASE_API_URL + `/phones/${ phoneId }.json`;
 
     PhonesService.sendRequest(url, callback);
   }
