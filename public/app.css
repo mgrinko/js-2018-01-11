@@ -26,6 +26,14 @@ body {
   width: 100px;
 }
 
+.phones__btn-buy-wrapper {
+  align-items: center;
+  float: right;
+  height: 100%;
+  display: flex;
+  margin: 0 1em;
+}
+
 .phones li {
   clear: both;
   height: 115px;
@@ -96,4 +104,8 @@ ul.specs dt {
 
 h1 {
   border-bottom: 1px solid gray;
+}
+
+.hidden {
+  display: none;
 }
