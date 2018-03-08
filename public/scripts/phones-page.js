@@ -26,7 +26,10 @@ export default class PhonesPage {
     });
 
     let phonesPromise = PhonesService.getPhones();
-    phonesPromise.then(this._showPhones.bind(this));
+
+    setTimeout(() => {
+      phonesPromise.then(this._showPhones.bind(this));
+    }, 2000);
 
     this._phonesCatalogue.on('phoneAdded', (event) => {
       const phoneId = event.detail;

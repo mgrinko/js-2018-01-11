@@ -9,23 +9,25 @@ export default class PhonesService {
 
     const result = PhonesService.sendRequest(url);
 
-    return result;
+    result.then((phones) => {
+      let filteredPhones = phones;
 
-    // result.then((phones) => {
-    //   let filteredPhones = phones;
-    //
-    //   if (query) {
-    //     const normalizedQuery = query.toLowerCase();
-    //
-    //     filteredPhones = filteredPhones.filter((phone) => {
-    //       return phone.name.toLowerCase().includes(normalizedQuery);
-    //     });
-    //   }
-    //
-    //   if (orderField) {
-    //     filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
-    //   }
-    // });
+      if (query) {
+        const normalizedQuery = query.toLowerCase();
+
+        filteredPhones = filteredPhones.filter((phone) => {
+          return phone.name.toLowerCase().includes(normalizedQuery);
+        });
+      }
+
+      if (orderField) {
+        filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
+      }
+
+      console.log(filteredPhones);
+    });
+
+    return result;
   }
 
   static getPhone(phoneId) {
@@ -35,35 +37,21 @@ export default class PhonesService {
   }
 
   static sendRequest(url) {
-    let promise = {
-      successCallback() {},
+    return new Promise(
+      (resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.send();
 
-      then(successCallback) {
-        this.successCallback = successCallback;
+        xhr.onload = function() {
+          if (xhr.status !== 200) {
+            reject(xhr.status + ': ' + xhr.statusText);
+          } else {
+            resolve(JSON.parse(xhr.responseText));
+          }
+        };
       }
-    };
-
-
-
-    let xhr = new XMLHttpRequest();
-
-    xhr.open('GET', url, true);
-
-    xhr.send();
-
-    xhr.onload = function() {
-      if (xhr.status !== 200) {
-        errorCallback(xhr.status + ': ' + xhr.statusText);
-      } else {
-        let data = JSON.parse(xhr.responseText);
-
-        promise.successCallback(data);
-      }
-    };
-
-
-
-    return promise;
+    );
   }
 }
 
