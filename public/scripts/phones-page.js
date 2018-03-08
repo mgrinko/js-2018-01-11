@@ -9,6 +9,8 @@ import PhoneDetails from './phone-details.js';
 export default class PhonesPage {
   constructor({ element }) {
     this._element = element;
+    this._query = '';
+    this._sortField = '';
 
     this._render();
 
@@ -58,14 +60,21 @@ export default class PhonesPage {
     });
 
     this._controls.on('filter', (event) => {
+      this._query = event.detail;
+
       PhonesService.getPhones(this._showPhones.bind(this), {
-        query: event.detail
+        query: this._query,
+        order: this._sortField,
       });
     });
 
     this._controls.on('sort', (event) => {
-      const fieldName = event.detail;
+      this._sortField = event.detail;
 
+      PhonesService.getPhones(this._showPhones.bind(this), {
+        query: this._query,
+        order: this._sortField,
+      });
     });
   }
 

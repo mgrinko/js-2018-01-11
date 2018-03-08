@@ -1,23 +1,36 @@
 'use strict';
 
 export default class PhonesService {
-  static getPhones(callback, params = {}) {
+  static getPhones(callback, { query, order: orderField } = {}) {
     let url = '/data/phones/phones.json';
+    const requestParts = [];
 
-    if (params.query) {
-      url += '?query=' + params.query;
+    if (query) {
+      requestParts.push(`query=${ query }`);
+    }
+
+    if (orderField) {
+      requestParts.push(`order=${ orderField }`);
+    }
+
+    if (requestParts.length > 0) {
+      url += '?' + requestParts.join('&');
     }
 
     PhonesService.sendRequest(url, (phones) => {
-      if (!params.query) {
-        callback(phones);
+      let filteredPhones = phones;
 
-        return ;
+      if (query) {
+        const normalizedQuery = query.toLowerCase();
+
+        filteredPhones = filteredPhones.filter((phone) => {
+          return phone.name.toLowerCase().includes(normalizedQuery);
+        });
       }
 
-      let filteredPhones = phones.filter((phone) => {
-        return phone.name.toLowerCase().includes(params.query);
-      });
+      if (orderField) {
+        filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
+      }
 
       callback(filteredPhones);
     });
