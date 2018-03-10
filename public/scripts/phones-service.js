@@ -7,9 +7,9 @@ export default class PhonesService {
   static getPhones({ query, order: orderField } = {}) {
     let url = BASE_API_URL + '/phones/phones.json';
 
-    const result = PhonesService.sendRequest(url);
+    let result = PhonesService.sendRequest(url);
 
-    result.then((phones) => {
+    result = result.then((phones) => {
       let filteredPhones = phones;
 
       if (query) {
@@ -24,7 +24,7 @@ export default class PhonesService {
         filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
       }
 
-      console.log(filteredPhones);
+      return filteredPhones;
     });
 
     return result;
