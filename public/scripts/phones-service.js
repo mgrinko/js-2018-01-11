@@ -4,23 +4,12 @@ const BASE_API_URL = 'https://mgrinko.github.io/js-2018-01-11/data';
 // const BASE_API_URL = 'http://localhost:3000/data';
 
 export default class PhonesService {
-  static getPhones(callback, { query, order: orderField } = {}) {
+  static getPhones({ query, order: orderField } = {}) {
     let url = BASE_API_URL + '/phones/phones.json';
-    const requestParts = [];
 
-    if (query) {
-      requestParts.push(`query=${ query }`);
-    }
+    const result = PhonesService.sendRequest(url);
 
-    if (orderField) {
-      requestParts.push(`order=${ orderField }`);
-    }
-
-    if (requestParts.length > 0) {
-      url += '?' + requestParts.join('&');
-    }
-
-    PhonesService.sendRequest(url, (phones) => {
+    result.then((phones) => {
       let filteredPhones = phones;
 
       if (query) {
@@ -35,31 +24,35 @@ export default class PhonesService {
         filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
       }
 
-      callback(filteredPhones);
+      console.log(filteredPhones);
     });
+
+    return result;
   }
 
-  static getPhone(phoneId, callback) {
+  static getPhone(phoneId) {
     let url = BASE_API_URL + `/phones/${ phoneId }.json`;
 
-    PhonesService.sendRequest(url, callback);
+    return PhonesService.sendRequest(url);
   }
 
-  static sendRequest(url, callback) {
-    let xhr = new XMLHttpRequest();
+  static sendRequest(url) {
+    return new Promise(
+      (resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.send();
 
-    xhr.open('GET', url, true);
-
-    xhr.send();
-
-    xhr.onload = function() {
-      if (xhr.status !== 200) {
-        alert(xhr.status + ': ' + xhr.statusText);
-      } else {
-        let data = JSON.parse(xhr.responseText);
-
-        callback(data);
+        xhr.onload = function() {
+          if (xhr.status !== 200) {
+            reject(xhr.status + ': ' + xhr.statusText);
+          } else {
+            resolve(JSON.parse(xhr.responseText));
+          }
+        };
       }
-    };
+    );
   }
 }
+
+

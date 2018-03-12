@@ -25,7 +25,11 @@ export default class PhonesPage {
       element: this._element.querySelector('[data-component="phones-catalogue"]'),
     });
 
-    PhonesService.getPhones(this._showPhones.bind(this));
+    let phonesPromise = PhonesService.getPhones();
+
+    setTimeout(() => {
+      phonesPromise.then(this._showPhones.bind(this));
+    }, 2000);
 
     this._phonesCatalogue.on('phoneAdded', (event) => {
       const phoneId = event.detail;
@@ -35,8 +39,9 @@ export default class PhonesPage {
 
     this._phonesCatalogue.on('phoneSelected', (event) => {
       const phoneId = event.detail;
+      const phonePromise = PhonesService.getPhone(phoneId);
 
-      PhonesService.getPhone(phoneId, (phone) => {
+      phonePromise.then((phone) => {
         this._phoneDetails.show(phone);
         this._phonesCatalogue.hide();
       });
@@ -51,19 +56,24 @@ export default class PhonesPage {
     this._controls.on('filter', (event) => {
       this._query = event.detail;
 
-      PhonesService.getPhones(this._showPhones.bind(this), {
+
+      const phonesPromise = PhonesService.getPhones({
         query: this._query,
         order: this._sortField,
       });
+
+      phonesPromise.then(this._showPhones.bind(this))
     });
 
     this._controls.on('sort', (event) => {
       this._sortField = event.detail;
 
-      PhonesService.getPhones(this._showPhones.bind(this), {
+      const phonesPromise = PhonesService.getPhones({
         query: this._query,
         order: this._sortField,
       });
+
+      phonesPromise.then(this._showPhones.bind(this))
     });
   }
 
