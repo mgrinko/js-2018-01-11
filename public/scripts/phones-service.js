@@ -7,51 +7,33 @@ export default class PhonesService {
   static getPhones({ query, order: orderField } = {}) {
     let url = BASE_API_URL + '/phones/phones.json';
 
-    const result = PhonesService.sendRequest(url);
+    return fetch(url)
+      .then((response) => response.json())
+      .then((phones) => {
+        let filteredPhones = phones;
 
-    result.then((phones) => {
-      let filteredPhones = phones;
+        if (query) {
+          const normalizedQuery = query.toLowerCase();
 
-      if (query) {
-        const normalizedQuery = query.toLowerCase();
+          filteredPhones = filteredPhones.filter((phone) => {
+            return phone.name.toLowerCase().includes(normalizedQuery);
+          });
+        }
 
-        filteredPhones = filteredPhones.filter((phone) => {
-          return phone.name.toLowerCase().includes(normalizedQuery);
-        });
-      }
+        if (orderField) {
+          filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
+        }
 
-      if (orderField) {
-        filteredPhones = filteredPhones.sort((a, b) => a[orderField] > b[orderField]);
-      }
-
-      console.log(filteredPhones);
-    });
-
-    return result;
+        return filteredPhones;
+      });
   }
 
-  static getPhone(phoneId) {
+  static async getPhone(phoneId) {
     let url = BASE_API_URL + `/phones/${ phoneId }.json`;
 
-    return PhonesService.sendRequest(url);
-  }
+    let response = await fetch(url);
 
-  static sendRequest(url) {
-    return new Promise(
-      (resolve, reject) => {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.send();
-
-        xhr.onload = function() {
-          if (xhr.status !== 200) {
-            reject(xhr.status + ': ' + xhr.statusText);
-          } else {
-            resolve(JSON.parse(xhr.responseText));
-          }
-        };
-      }
-    );
+    return await response.json();
   }
 }
 
