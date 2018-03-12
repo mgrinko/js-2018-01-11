@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public')
   },
   devtool: 'source-map',
+  watch: true,
 
 
   module: {
@@ -22,6 +23,10 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test: /\.hbs$/,
+        loader: "handlebars-loader"
       }
     ]
   },

@@ -22,7 +22,10 @@
     "@babel/core": "^7.0.0-beta.40",
     "@babel/preset-env": "^7.0.0-beta.40",
     "babel-loader": "^8.0.0-beta.0",
+    "handlebars": "^4.0.11",
+    "handlebars-loader": "^1.6.0",
     "node-static": "^0.7.10",
+    "raw-loader": "^0.5.1",
     "webpack": "^3.11.0"
   }
 }

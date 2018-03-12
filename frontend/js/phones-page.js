@@ -4,7 +4,7 @@ import PhonesCatalogue from './phones-catalogue.js';
 import PhonesService from './phones-service.js';
 import ShoppingCart from './shopping-cart.js';
 import PhonesControls from './phones-controls.js';
-import PhoneDetails from './phone-details.js';
+import PhoneDetails from './components/phone-details/phone-details.js';
 
 export default class PhonesPage {
   constructor({ element }) {
