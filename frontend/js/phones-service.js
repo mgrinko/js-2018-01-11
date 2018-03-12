@@ -28,12 +28,11 @@ export default class PhonesService {
       });
   }
 
-  static async getPhone(phoneId) {
+  static getPhone(phoneId) {
     let url = BASE_API_URL + `/phones/${ phoneId }.json`;
 
-    let response = await fetch(url);
-
-    return await response.json();
+    return fetch(url)
+      .then((response) => response.json());
   }
 }
 
