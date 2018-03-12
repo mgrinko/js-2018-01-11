@@ -1,7 +1,8 @@
 import Component from '../../component.js';
 import compiledTemplate from './phone-details.hbs';
 
-console.log(compiledTemplate);
+import style from './phone-details.css';
+
 
 export default class PhoneDetails extends Component {
   constructor({element}) {

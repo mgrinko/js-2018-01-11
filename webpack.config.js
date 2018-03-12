@@ -9,8 +9,6 @@ module.exports = {
     path: path.resolve(__dirname, 'public')
   },
   devtool: 'source-map',
-  watch: true,
-
 
   module: {
     rules: [
@@ -27,7 +25,15 @@ module.exports = {
       {
         test: /\.hbs$/,
         loader: "handlebars-loader"
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
       }
+
     ]
   },
 
@@ -36,4 +42,10 @@ module.exports = {
       sourceMap: true,
     })
   ],
+
+  devServer: {
+    contentBase: path.join(__dirname, "public"),
+    compress: true,
+    port: 9000
+  }
 };
