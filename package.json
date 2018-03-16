@@ -1,0 +1,24 @@
+{
+  "name": "js-2018-01-11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/io777/js-2018-01-11.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/io777/js-2018-01-11/issues"
+  },
+  "homepage": "https://github.com/io777/js-2018-01-11#readme",
+  "devDependencies": {
+    "node-static": "^0.7.10",
+    "nodemon": "^1.17.1"
+  }
+}
