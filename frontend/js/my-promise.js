@@ -19,7 +19,7 @@ class MyPromise {
     this._status = 'fulfilled';
     this._result = data;
 
-    this._successCallbacks.forEach((callback) => {
+    forEthis._successCallbacks.ach((callback) => {
       callback(data);
     });
   }
